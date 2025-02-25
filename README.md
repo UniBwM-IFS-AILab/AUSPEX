@@ -37,7 +37,7 @@ When working with Colosseum (AirSim fork from CodexLabsLLC) Unreal Engine 5.2 is
 
 Follow the instructions under: https://microsoft.github.io/AirSim/build_windows/. The most up-to-date Version of Unreal Engine confirmed to be working is currently 4.27.2.
 
-Furthermore, AirSim requires a settings file to operate (should be located under "%USERPROFILE%/Documents/AirSim"). Exchange the default settings.json file with the settings file provided in this [repository](https://git.unibw.de/angewandte-ki-f-r-dynamische-systeme/AUSPEX/-/tree/main/utils/airsim_settings?ref_type=heads). For detailed information about AirSim settings see: https://microsoft.github.io/AirSim/settings/.
+Furthermore, AirSim requires a settings file to operate (should be located under "%USERPROFILE%/Documents/AirSim"). Exchange the default settings.json file with the settings file provided in this [repository](https://github.com/UniBwM-IFS-AILab/AUSPEX). For detailed information about AirSim settings see: https://microsoft.github.io/AirSim/settings/.
 
 ### Setup WSL
 
