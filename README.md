@@ -14,7 +14,7 @@ It implements [REAP](https://github.com/UniBwM-IFS-AILab/REAP) as simulation env
    * AUSPEX-EXEC &rarr; **EXEC**ution Module
    * AUSPEX-PLAN &rarr; **PLAN**nning Module
    * AUSPEX-SENS &rarr; **SENS**or Data Processing Module
-   * AUSPEX-MSGS &rarr; **M**e **S**sa**G**e**S**
+   * AUSPEX-MSGS &rarr; **M**e**S**sa**G**e**S**
    * AUSPEX-KNOW &rarr; World **KNOW**ledge Base
    * utils &rarr; folder containing utils to setup the environment
 
