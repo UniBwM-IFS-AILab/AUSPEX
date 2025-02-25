@@ -1,0 +1,28 @@
+[
+    {
+        "platform_id": "vhcl0",
+        "team_id": "drone_team",
+        "actions": [
+            {
+                "action_name": "take_off",
+                "parameters": [5]
+            },
+            {
+                "action_name": "fly_3D",
+                "parameters": ["openareas5"]
+            },
+            {
+                "action_name": "fly_3D",
+                "parameters": [48.059632985858094, 11.646511718802026, 100]
+            },
+            {
+                "action_name": "hover",
+                "parameters": [5000]
+            },
+            {
+                "action_name": "land",
+                "parameters": []
+            }
+        ]
+    }
+]

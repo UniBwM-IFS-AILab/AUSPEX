@@ -1,0 +1,46 @@
+{
+    "platform_id": "hawk0",
+    "team_id": "drone_team",
+    "platform_details": {
+        "model": "Holybro Multikopter",
+        "max_flight_duration": 45.0,
+        "max_flight_height": 120.0,
+        "max_velocity": 20.0,
+        "turning_radius": 0.0
+    },
+    "sensors":[
+        {
+            "id": "id1",
+            "type": "eo_camera",
+            "specifications": {
+                "fov": {
+                    "horizontal": {
+                        "min": 0,
+                        "max": 0
+                    },
+                    "vertical": {
+                        "min": 0,
+                        "max": 0
+                    }
+                },
+                "image_width": 100,
+                "image_height": 100
+            }
+        }
+    ],
+    "payload": [
+        {
+            "id": "id2",
+            "type": "first_aid",
+            "specifications": {
+                "content": [
+                    "Bandage",
+                    "Gauze",
+                    "Antiseptic Wipes",
+                    "Adhesive Tape",
+                    "Scissors"
+                ]
+            }
+        }
+    ]
+}

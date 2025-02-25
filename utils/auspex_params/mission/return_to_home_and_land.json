@@ -1,0 +1,20 @@
+[
+    {
+        "platform_id": "",
+        "team_id": "",
+        "actions": [
+            {
+                "action_name": "fly_3D",
+                "parameters": ["home"]
+            },
+            {
+                "action_name": "hover",
+                "parameters": [4000]
+            },
+            {
+                "action_name": "land",
+                "parameters": []
+            }
+        ]
+    }
+]
