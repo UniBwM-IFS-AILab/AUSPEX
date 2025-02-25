@@ -37,7 +37,7 @@ When working with Colosseum (AirSim fork from CodexLabsLLC) Unreal Engine 5.2 is
 
 Follow the instructions under: https://microsoft.github.io/AirSim/build_windows/. The most up-to-date Version of Unreal Engine confirmed to be working is currently 4.27.2.
 
-Furthermore, AirSim requires a settings file to operate (should be located under "%USERPROFILE%/Documents/AirSim"). Exchange the default settings.json file with the settings file provided in this [repository](https://github.com/UniBwM-IFS-AILab/AUSPEX/-/tree/main/utils/airsim_settings?ref_type=heads). For detailed information about AirSim settings see: https://microsoft.github.io/AirSim/settings/.
+Furthermore, AirSim requires a settings file to operate (should be located under "%USERPROFILE%/Documents/AirSim"). Exchange the default settings.json file with the settings file provided in this [repository](https://github.com/UniBwM-IFS-AILab/AUSPEX/tree/main/utils/airsim_settings). For detailed information about AirSim settings see: https://microsoft.github.io/AirSim/settings/.
 
 ### Setup WSL
 
@@ -99,7 +99,7 @@ git config --global credential.helper store
 #### Assign fix IP address to WSL
 
 As the IP address of WSL might change after restarting the Windows machine, it can be useful to set up a static address via a powershell script - provided in this repository as wsl_static_ip.ps1 - that gets executed on WSL startup. 
-Download the script provided in the [repository](https://github.com/UniBwM-IFS-AILab/AUSPEX/-/blob/main/utils/wsl_win_script/wsl_static_ip.ps1?ref_type=heads) and move it to C:\WSL\Scripts.
+Download the script provided in the [repository](https://github.com/UniBwM-IFS-AILab/AUSPEX/tree/main/utils/wsl_win_script) and move it to C:\WSL\Scripts.
 
 Furthermore make sure to allow incoming connections in Windows:
 
