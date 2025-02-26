@@ -4,6 +4,18 @@
 
 In ancient Rome an auspex (latin for "one who observes the birds") was a priest who studied bird behavior (flight patterns, calls, or feeding habits) to determine the will of the gods.
 
+To cite **AUSPEX**, please use the following reference: 
+```
+@article{Doeschl-et-al:2025:AUSPEX,
+    url = {[COMING SOON]},
+    year = 2025,
+    month = {February},
+    publisher = {arxiv.org},
+    author = {Bj\''orn D\''oschl and Kai Sommer and Jane Jean Kiam},
+    title = {AUSPEX: An Integrated Open-Source Decision-Making Framework for UAVs in Rescue Missions},
+}
+```
+
 ## Overview
 
 AUSPEX is a modular framework for developing and validating AI planning algorithms for UAVs.
