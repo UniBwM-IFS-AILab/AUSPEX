@@ -12,18 +12,24 @@
 [submodule "AUSPEX-EXEC"]
 	path = AUSPEX-EXEC
 	url = https://github.com/UniBwM-IFS-AILab/AUSPEX-EXEC.git
+	branch = main
 [submodule "AUSPEX-MSGS"]
 	path = AUSPEX-MSGS
 	url = https://github.com/UniBwM-IFS-AILab/AUSPEX-MSGS.git
+	branch = main
 [submodule "AUSPEX-AERO"]
 	path = AUSPEX-AERO
 	url = https://github.com/UniBwM-IFS-AILab/AUSPEX-AERO.git
+	branch = main
 [submodule "AUSPEX-SENS"]
 	path = AUSPEX-SENS
 	url = https://github.com/UniBwM-IFS-AILab/AUSPEX-SENS.git
+	branch = main
 [submodule "AUSPEX-KNOW"]
 	path = AUSPEX-KNOW
 	url = https://github.com/UniBwM-IFS-AILab/AUSPEX-KNOW.git
+	branch = main
 [submodule "AUSPEX-PLAN"]
 	path = AUSPEX-PLAN
 	url = https://github.com/UniBwM-IFS-AILab/AUSPEX-PLAN.git
+	branch = main
