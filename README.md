@@ -1,12 +1,6 @@
+
 # AUSPEX
-<div align="center">
-  <img src="system_overview.jpg" width="1000" height="500">
-</div>
-
----
-
-### **A**utomated **U**nmanned Aerial Swarm **S**ystem for **P**lanning and **EX**ecution (**AUSPEX**)
-
+**A**utomated **U**nmanned Aerial Swarm **S**ystem for **P**lanning and **EX**ecution (**AUSPEX**)
 
 In ancient Rome an auspex (latin for "one who observes the birds") was a priest who studied bird behavior (flight patterns, calls, or feeding habits) to determine the will of the gods.
 
@@ -27,6 +21,10 @@ To cite **AUSPEX**, please use the following reference:
 
 AUSPEX is a modular framework for developing and validating AI planning algorithms for UAVs.
 It can be used together with [REAP](https://github.com/UniBwM-IFS-AILab/REAP) as simulation environment.
+
+<div align="center">
+  <img src="system_overview.jpg" width="1000" height="500">
+</div>
 
 ### AUSPEX components
    * AUSPEX-AERO &rarr; Onboard Software, including the Offboard Controller
