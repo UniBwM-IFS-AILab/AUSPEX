@@ -2,9 +2,6 @@
 <div align="center">
   <img src="system_overview.jpg" width="1000" height="500">
 </div>
-<div align="center">
-    <h1 align="center">AUGUR</h1>
-</div>
 
 **A**utomated **U**nmanned Aerial Swarm **S**ystem for **P**lanning and **EX**ecution
 
