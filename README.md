@@ -3,7 +3,13 @@
   <img src="system_overview.jpg" width="1000" height="500">
 </div>
 
-**A**utomated **U**nmanned Aerial Swarm **S**ystem for **P**lanning and **EX**ecution
+---
+
+<span style="font-size:1.7em; ">
+   <b>A</b>utomated <b>U</b>nmanned Aerial Swarm <b>S</b>ystem for <b>P</b>lanning and <b>EX</b>ecution (<b>AUSPEX</b>)
+</span>
+<br>
+<br>
 
 In ancient Rome an auspex (latin for "one who observes the birds") was a priest who studied bird behavior (flight patterns, calls, or feeding habits) to determine the will of the gods.
 
