@@ -4,7 +4,7 @@
 
 In ancient Rome an auspex (latin for "one who observes the birds") was a priest who studied bird behavior (flight patterns, calls, or feeding habits) to determine the will of the gods.
 
-To cite **AUSPEX**, please use the following reference: 
+To cite **AUSPEX**, please use the following reference:
 ```
 @article{Doeschl-et-al:2025:AUSPEX,
   author = {Bj{\"o}rn D{\"o}schl and Kai Sommer and Jane Jean Kiam},
@@ -48,7 +48,7 @@ When working with Colosseum (AirSim fork from CodexLabsLLC) Unreal Engine 5.2 is
 
 ### Install Unreal Engine with the AirSim Plugin ([REAP](https://github.com/UniBwM-IFS-AILab/REAP))
 
-Follow the instructions under: https://microsoft.github.io/AirSim/build_windows/. The most up-to-date Version of Unreal Engine confirmed to be working is currently 4.27.2.
+Follow the instructions under: https://microsoft.github.io/AirSim/build_windows/. The most up-to-date Version of Unreal Engine confirmed to be working is currently 4.27.2 (or 5.2 if you are using Colosseum).
 
 Furthermore, AirSim requires a settings file to operate (should be located under "%USERPROFILE%/Documents/AirSim"). Exchange the default settings.json file with the settings file provided in this [repository](https://github.com/UniBwM-IFS-AILab/AUSPEX/tree/main/utils/airsim_settings). For detailed information about AirSim settings see: https://microsoft.github.io/AirSim/settings/.
 
@@ -111,7 +111,7 @@ git config --global credential.helper store
 
 #### Assign fix IP address to WSL
 
-As the IP address of WSL might change after restarting the Windows machine, it can be useful to set up a static address via a powershell script - provided in this repository as wsl_static_ip.ps1 - that gets executed on WSL startup. 
+As the IP address of WSL might change after restarting the Windows machine, it can be useful to set up a static address via a powershell script - provided in this repository as wsl_static_ip.ps1 - that gets executed on WSL startup.
 Download the script provided in the [repository](https://github.com/UniBwM-IFS-AILab/AUSPEX/tree/main/utils/wsl_win_script) and move it to C:\WSL\Scripts.
 
 Furthermore make sure to allow incoming connections in Windows:
@@ -150,7 +150,7 @@ At the end of the script you are prompted to assign an instance name to your WSL
 After that, the installation is done and ready to use.
 
 ## Real UAV Setup
-  
+
 To setup AUSPEX on a real UAV, use the **AVIS** keyword during installation.
 ```
 cd ~/AUSPEX
@@ -166,17 +166,17 @@ Now the general setup is done and you are ready to use a real UAV with AUSPEX
 ## Network Setup
 
 When working with real UAVs, the UAVs and the AUSPEX system should be in the same local network (e.g. via Router, VPN or ROS 2 Bridges). Moreover, to use ROS 2 over a VPN a Discovery Server is necessary. Set up a discovery server and export its IP on the UAV, as well as every system which is part of AUSPEX:
-``` 
-export ROS_DISCOVERY_SERVER=<DISCOVERY_IP>:11811
+```
+export ROS_DISCOVERY_SERVER=<DISCOVERY_IP>:11811 (this is already defined in the AUSPEX/utils/user_exports.sh file)
 ```
 For convenience, add the export commands to the ```~./bashrc```.
 Auspex can be deployed on distributed hardware, as long as each system is connected to the Discovery Server.
- 
+
 **Optional:** If the discovery server is not working, it is possible to set up the ROS 2 communication as peer to peer, multicast network. For this export the FASTRTPS_DEFAULT_PROFILES_FILE:
 
 ```
 export FASTRTPS_DEFAULT_PROFILES_FILE=~/AUSPEX/utils/dds_scripts/fastrtps_dds_tailscale/fastrtps_dds_setup.xml
 ```
 
-and add a ```<locator><udpv4><address>"PEER_IP"</address></udpv4></locator>``` tag, for each peer in the system and exchange the ```PEER_IP``` with the IP address of the respective peer. 
+and add a ```<locator><udpv4><address>"PEER_IP"</address></udpv4></locator>``` tag, for each peer in the system and exchange the ```PEER_IP``` with the IP address of the respective peer.
 **NOTE:** This will drastically increase the communication overhead, in comparison to [discovery servers](https://docs.ros.org/en/foxy/Tutorials/Advanced/Discovery-Server/Discovery-Server.html).

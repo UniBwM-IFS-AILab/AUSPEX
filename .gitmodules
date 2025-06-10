@@ -1,14 +1,3 @@
-[submodule "AirSim"]
-	path = AirSim
-	url = https://github.com/microsoft/AirSim
-[submodule "PX4-Autopilot"]
-	path = PX4-Autopilot
-	url = https://github.com/PX4/PX4-Autopilot.git
-	branch = main
-[submodule "Micro-XRCE-DDS-Agent"]
-	path = Micro-XRCE-DDS-Agent
-	url = https://github.com/eProsima/Micro-XRCE-DDS-Agent.git
-	branch = ros2
 [submodule "AUSPEX-EXEC"]
 	path = AUSPEX-EXEC
 	url = https://github.com/UniBwM-IFS-AILab/AUSPEX-EXEC.git
