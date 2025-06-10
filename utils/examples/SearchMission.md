@@ -21,7 +21,7 @@ After AUSPEX is installed on the UAV and the Base station, it is important to se
 ## Running the Example:
 
 To run use case 1 "Search Mission", follow the instructions below.
- 
+
  1. First construct your problem and domain file. These files can be found in the base station AUSPEX installation in ```~/AUSPEX/AUSPEX-PLAN/src/auspex_planning/pddl/```. For defining PDDL files, you can look up [UP](https://unified-planning.readthedocs.io/en/latest/).
  2. Open the ```planner_config.json``` and enter ```pddl_planner``` to select this planner for your ```<team_id>``` (defined in the ```platform_properties.json```):
     ```
@@ -34,47 +34,54 @@ To run use case 1 "Search Mission", follow the instructions below.
     ]
     ```
 3. **UAV:**
-    On the companion computer of the UAV start the following commands in a separate shell: 
-    - To start the &mu;-XRCE-DDS-Agent:
+    On the companion computer of the UAV start the following commands in a separate shell:
+    - Start the docker container:
         ```
-        start_rtps_agent_drone
+        run_avis_pi_vasa
         ```
-    - To start the offboard controller:
+    - And in a second terminal type the follwoing, to start the &mu;-XRCE-DDS-Agent:
         ```
-        start_offboard_control
+        iv start_rtps_agent_drone
         ```
-4. **GCS:** 
-    On the ground control station type ```start_hitl```, to start the necessary commands each in its own shell tab.
+    - To start the offboard controller type in a third terminal:
+        ```
+        iv start_offboard_control
+        ```
+4. **GCS:**
+    On the ground control station type ```run_terra_vasa``` to start the docker environment and in another shell run ```win_start_gcs```, to start the necessary commands each in its own shell tab.
 
-    **Alternatively**, it is possible to start each command yourself, by using the aliases commands in a separate shell in the given order. <br><br>
-
+    **Alternatively**, it is possible to start each command yourself, by using the following aliases in a separate shell in the given order. The alias ```iv``` means "in vasa" and starts the command in the docker container.<br><br>
+    - Start the docker container:
+        ```
+        run_terra_vasa
+        ```
     - Start the Copernicus server, which provids height data to the system:
         ```
-        start_copernicus_server
+        iv start_copernicus_server
         ```
-    - Start ValKey as database: 
+    - Start ValKey as database:
         ```
-        stop_valkey && start_valkey
+        iv "stop_valkey && start_valkey"
         ```
-    - Start the Knowledge Base, interfacing ValKey: 
+    - Start the Knowledge Base, interfacing ValKey:
         ```
-        start_knowledge_main
+        iv start_knowledge_main
         ```
-    - Start the interface to Unified Planning: 
+    - Start UP4ROS2:
         ```
-        start_up4ros
+        iv start_up4ros
         ```
-    - Start the Executor Manager: 
+    - Start the Executor Manager:
         ```
-        start_executor_main
+        iv start_executor_main
         ```
-    - Start the Planning Main: 
+    - Start the Planning Main:
         ```
-        start_planning_main
+        iv start_planning_main
         ```
-    - Start the perception module: 
+    - Start the perception module:
         ```
-        start_perception_main
+        iv start_perception_main
         ```
     The different modules can be deployed distributed and are not necessarily bound to the same hardware. After setting everything up, the last shell should display ```Planner Main ready...```
 
@@ -85,12 +92,12 @@ To run use case 1 "Search Mission", follow the instructions below.
     The available commands are displayed. To plan a mission type:
     ```
     plan <team_id>
-    ``` 
+    ```
     and hit enter. This will query the planner for ```<team_id>``` from the knowledge base, which will be the ```pddl_planner```. This planner will forward the domain and problem file, specified earlier, to UP and wait for a plan. When a plan is computed it is loaded into the knowledge base and can be accepted by sending the command:
     ```
     accept <team_id>
     ```
-    This will notify the planner, to query the plan for ```<team_id>``` from the knowledge base and forward it to the respective executors. 
+    This will notify the planner, to query the plan for ```<team_id>``` from the knowledge base and forward it to the respective executors.
 
 After these 5 steps, the UAV should be flying and executing the computed plan form UP.
 

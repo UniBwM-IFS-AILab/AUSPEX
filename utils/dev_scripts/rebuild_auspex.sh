@@ -1,6 +1,6 @@
 #!/bin/bash
 # a script to build all AUSPEX-x submodules
-AUSPEX_HOME=~/AUSPEX
+AUSPEX_HOME=/root/AUSPEX
 
 # build MSG
 echo "building AUSPEX-MSGS"
@@ -13,7 +13,7 @@ echo "building AUSPEX-AERO"
 cd $AUSPEX_HOME/AUSPEX-AERO/
 colcon build
 
-if [ $AUSPEX_PLATFORM == $VARIANT_TERRA ]; then
+if [ $AUSPEX_PLATFORM == TERRA ]; then
     # build EXE
     echo "building AUSPEX-EXEC"
     cd $AUSPEX_HOME/AUSPEX-EXEC

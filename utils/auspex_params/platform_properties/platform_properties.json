@@ -3,6 +3,8 @@
     "team_id": "drone_team",
     "platform_details": {
         "model": "Holybro Multikopter",
+        "flight_controller":"PX4",
+        "offboard_controller":"RPI5",
         "max_flight_duration": 45.0,
         "max_flight_height": 120.0,
         "max_velocity": 20.0,
@@ -12,6 +14,7 @@
         {
             "id": "id1",
             "type": "eo_camera",
+            "model":"RPI5",
             "specifications": {
                 "fov": {
                     "horizontal": {

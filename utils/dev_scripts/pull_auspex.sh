@@ -4,7 +4,7 @@ AUSPEX_HOME=~/AUSPEX
 
 # pull MSG
 echo "building AUSPEX-MSGS"
-cd $AUSPEX_HOME/AUSPEX-MSGS 
+cd $AUSPEX_HOME/AUSPEX-MSGS
 git pull
 
 # pull OBC
@@ -12,7 +12,11 @@ echo "building AUSPEX-AERO"
 cd $AUSPEX_HOME/AUSPEX-AERO
 git pull
 
-if [ $AUSPEX_PLATFORM == $VARIANT_TERRA ]; then
+echo "building AUSPEX-VASA"
+cd $AUSPEX_HOME/AUSPEX-VASA
+git pull
+
+if [ $AUSPEX_PLATFORM == "TERRA" ]; then
     # pull EXE
     echo "building AUSPEX-EXEC"
     cd $AUSPEX_HOME/AUSPEX-EXEC
