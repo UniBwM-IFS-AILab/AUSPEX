@@ -22,3 +22,7 @@
 	path = AUSPEX-PLAN
 	url = https://github.com/UniBwM-IFS-AILab/AUSPEX-PLAN.git
 	branch = main
+[submodule "AUSPEX-VASA"]
+	path = AUSPEX-VASA
+	url = https://github.com/UniBwM-IFS-AILab/AUSPEX-VASA.git
+	branch = main
