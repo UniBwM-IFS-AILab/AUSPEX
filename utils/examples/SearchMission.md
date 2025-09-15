@@ -37,35 +37,31 @@ To run use case 1 "Search Mission", follow the instructions below.
     On the companion computer of the UAV start the following commands in a separate shell:
     - Start the docker container:
         ```
-        run_avis_pi_vasa
-        ```
-    - And in a second terminal type the follwoing, to start the &mu;-XRCE-DDS-Agent:
-        ```
-        iv start_rtps_agent_drone
+        runvasa
         ```
     - To start the offboard controller type in a third terminal:
         ```
-        iv start_offboard_control
+        iv run_aero
         ```
 4. **GCS:**
-    On the ground control station type ```run_terra_vasa``` to start the docker environment and in another shell run ```win_start_gcs```, to start the necessary commands each in its own shell tab.
+    On the ground control station type ```runvasa``` to start the docker environment and in another shell run ```win_start_gcs```, to start the necessary commands each in its own shell tab.
 
     **Alternatively**, it is possible to start each command yourself, by using the following aliases in a separate shell in the given order. The alias ```iv``` means "in vasa" and starts the command in the docker container.<br><br>
     - Start the docker container:
         ```
-        run_terra_vasa
+        runvasa
         ```
     - Start the Copernicus server, which provids height data to the system:
         ```
-        iv start_copernicus_server
+        iv run_copernicus
         ```
     - Start ValKey as database:
         ```
-        iv "stop_valkey && start_valkey"
+        iv "stop_valkey && run_valkey"
         ```
     - Start the Knowledge Base, interfacing ValKey:
         ```
-        iv start_knowledge_main
+        iv run_know
         ```
     - Start UP4ROS2:
         ```
@@ -73,21 +69,21 @@ To run use case 1 "Search Mission", follow the instructions below.
         ```
     - Start the Executor Manager:
         ```
-        iv start_executor_main
+        iv run_exec
         ```
     - Start the Planning Main:
         ```
-        iv start_planning_main
+        iv run_plan
         ```
     - Start the perception module:
         ```
-        iv start_perception_main
+        iv run_sens
         ```
     The different modules can be deployed distributed and are not necessarily bound to the same hardware. After setting everything up, the last shell should display ```Planner Main ready...```
 
 5.  To interact with the planner interface, start the CLI:
     ```
-    start_command_publisher
+    run_cmd
     ```
     The available commands are displayed. To plan a mission type:
     ```

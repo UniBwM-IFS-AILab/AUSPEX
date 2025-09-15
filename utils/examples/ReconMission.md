@@ -29,48 +29,44 @@ To run use case 2 "Reconnaissance Mission", follow the instructions below.
     ```
 3. **Unreal Engine:** Start the simulation and deploy an UAV.
 4. **GCS:**
-    On the ground control station type ```run_terra_vasa``` to start the docker environment and in another shell run ```win_start_sim <number_of_uavs>```, to start the necessary commands each in its own shell tab for one UAV. by changing the ```<number_of_uavs>``` argument, multiple UAVs can be launched.
+    On the ground control station type ```runvasa``` to start the docker environment and in another shell run ```win_start_sim <number_of_uavs>```, to start the necessary commands each in its own shell tab for one UAV. by changing the ```<number_of_uavs>``` argument, multiple UAVs can be launched.
 
     **Alternatively**, it is possible to start each command yourself, by using the following aliases in a separate shell in the given order. The alias ```iv``` means "in vasa" and starts the command in the docker container.<br><br>
     - Start the docker container:
         ```
-        run_terra_vasa
+        runvasa
         ```
     - Start the flight controller software for each drone:
         ```
-        iv "start_px4_multiple <number_of_uavs>"
-        ```
-    - Start the &mu;-XRCE-DDS-Agent for each drone:
-        ```
-        iv start_rtps_agent
+        iv "run_px4 <number_of_uavs>"
         ```
     - Start the offboard control node for each drone:
         ```
-        iv "start_offboard_control count:=<number_of_uavs>"
+        iv "run_aero count:=<number_of_uavs>"
         ```
     - Start the Copernicus server, which provids height data to the system:
         ```
-        iv start_copernicus_server
+        iv run_copernicus
         ```
     - Start ValKey as database:
         ```
-        iv "stop_valkey && start_valkey"
+        iv "stop_valkey && run_valkey"
         ```
     - Start the Knowledge Base, interfacing ValKey:
         ```
-        iv start_knowledge_main
+        iv run_know
         ```
     - Start the Executor Manager:
         ```
-        iv start_executor_main
+        iv run_exec
         ```
     - Start the Planning Main:
         ```
-        iv start_planning_main
+        iv run_plan
         ```
     - Start the perception module:
         ```
-        iv start_perception_main
+        iv run_sens
         ```
     The different modules can be deployed distributed and are not necessarily bound to the same hardware. After setting everything up, the last shell should display ```Planner Main ready...```
 5.  To start the planner, the command line is used. First publish your example mission:
@@ -79,7 +75,7 @@ To run use case 2 "Reconnaissance Mission", follow the instructions below.
     ```
     and then start the command line interface with:
     ```
-    iv start_command_publisher
+    iv run_cmd
     ```
     The available commands are displayed. To plan a mission type:
     ```

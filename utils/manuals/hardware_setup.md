@@ -1,6 +1,6 @@
 ### A guide on how to set up real hardware with AUSPEX
 ---
-# Setup Multikopter MK-U20
+# Setup Multikopter MK-U20 (Ardupilot)
 ## 1. Setup for the Orange Cube Plus (PX4 v1.15.4)
 - Prepare px4 version v1.15.4 with cubepilot_cubeorangeplus_default and custom:
     ```
@@ -31,28 +31,24 @@
             - Off
             - Off
             - On
-- Prepare Custom v1.15.4 Firmware with dds_conf.yaml
-- Configure PX4 to start up with the correct UXRCE Client config. In the MavLink Console of QGC type and edit {name}:
+
+- For mavsdk via GQC:
     ```
-    cd /fs/microsd/
-    mkdir etc && cd etc
-    "" >> config.txt
-    echo "uxrce_dds_client stop" >> extras.txt
-    echo "uxrce_dds_client start -t serial -d /dev/ttyS3 -b 921600 -n {name}" >> extras.txt
+    set MAV_0_CONFIG to Telem2
+    Set MAV_0_MODE to OnBoard
+    Set MAV_0_RATE to 0
+    Set SER_Tel2_Baud to 57600
     ```
-- In QGC set UXRCE_DDS_CFG2 to Telem2 and UXRCE_DDS_PTCFG to Custom Participant
 
 ## 2. Setup for Jetson Xavier NX
 
-- Use the TTYTHS0 device to interface the Oragne Cube+:
-```
-MicroXRCEAgent serial --dev /dev/ttyTHS0 -b 921600 -r ~/dds_local_setup.xml
-```
-- Install auspex and vasa etc
+- The TTYTHS0 device is used to interface the Orange Cube+.
+
+- Install auspex and vasa etc.
 
 ---
 
-# Setup Holybro X500 v2
+# Setup Holybro X500 v2 (PX4)
 ## 1. Setup for the PixHawk 6c (PX4 v1.15.4)
 - Prepare Custom v1.15.4 Firmware with dds_conf.yaml
     ```
@@ -60,15 +56,13 @@ MicroXRCEAgent serial --dev /dev/ttyTHS0 -b 921600 -r ~/dds_local_setup.xml
     cd PX4-Autopilot
     make px4_fmu-v6c_default
     ```
-- Configure PX4 to start up with the correct UXRCE Client config. In the MavLink Console of QGC type and edit {name}:
+- For mavsdk via GQC:
     ```
-    cd /fs/microsd/
-    mkdir etc && cd etc
-    "" >> config.txt
-    echo "uxrce_dds_client stop" >> extras.txt
-    echo "uxrce_dds_client start -t serial -d /dev/ttyS3 -b 921600 -n {name}" >> extras.txt
+    set MAV_0_CONFIG to Telem2
+    Set MAV_0_MODE to OnBoard
+    Set MAV_0_RATE to 0
+    Set SER_Tel2_Baud to 921650
     ```
-- In QGC set UXRCE_DDS_CFG to Telem2 and UXRCE_DDS_PTCFG to Custom Participant
 - Also set MAV_0_CONFIG to TELEM 1 to enable SIK Holybro Telemetry
 - Check Failsafe Flags in QGC
 
@@ -121,7 +115,7 @@ MicroXRCEAgent serial --dev /dev/ttyTHS0 -b 921600 -r ~/dds_local_setup.xml
     ```
 - build docker container for avis (avis-vasa):
     ```
-    build_pi_vasa
+    buildvasa
     ```
 - Clone Menthon-WS
 - Create openvpn folder and add vpn configs
@@ -136,16 +130,14 @@ MicroXRCEAgent serial --dev /dev/ttyTHS0 -b 921600 -r ~/dds_local_setup.xml
     - On RPI
         - first refresh your Wi-Fi list:
         ```
-        nmcli dev wifi list --rescan yes
+        sudo nmcli device wifi rescan
+        sudo nmcli device wifi list
         ```
         - and then add the Wi-Fi to your known networks:
         ```
-        nmcli connection add \
-        con-name    hummingbirdX_network \
-        ssid        hummingbirdX_network \
-        wifi-sec.psk password
+        sudo nmcli connection add type wifi ifname '*' con-name hummingbirdX_network ssid "hummingbirdX_network" wifi-sec.key-mgmt wpa-psk wifi-sec.psk "password" connection.autoconnect no
         ```
         - if a connection should be established (Not necessary; after reboot, it will auto-connect if the network is available):
         ```
-        nmcli connection up hummingbirdX_network
+        sudo nmcli connection up hummingbirdX_network
         ```

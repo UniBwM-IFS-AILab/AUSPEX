@@ -20,16 +20,18 @@ SCRIPT_DIR=$(dirname "$(realpath "$0")")
 cd $SCRIPT_DIR
 cd ..
 cd ..
+cd AUSPEX-MSGS
+rm -rf build install log
+cd ..
+
 cd AUSPEX-AERO
-sudo find ./build -mindepth 1 -maxdepth 1 ! -name 'px4_msgs' -exec rm -rf {} + # remove all except px4_msgs
-sudo find ./install -mindepth 1 -maxdepth 1 ! -name 'px4_msgs' -exec rm -rf {} + # remove all except px4_msgs
-sudo rm -r ./log
+rm -rf build install log
 if [ $AUSPEX_PLATFORM == "TERRA" ]; then
     cd ..
     cd AUSPEX-KNOW
-    sudo rm -r ./build
-    sudo rm -r ./install
-    sudo rm -r ./log
+    rm -r ./build
+    rm -r ./install
+    rm -r ./log
 fi
 
 echo "please close this shell - open a new one and rebuild_auspex"

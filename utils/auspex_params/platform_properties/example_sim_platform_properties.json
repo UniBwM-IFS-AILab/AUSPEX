@@ -14,20 +14,33 @@
         {
             "id": "id1",
             "type": "eo_camera",
-            "model":"SIM",
+            "model":"SIM_UE",
             "specifications": {
                 "fov": {
                     "horizontal": {
-                        "min": 0,
-                        "max": 0
+                        "min": 100,
+                        "max": 100
                     },
                     "vertical": {
-                        "min": 0,
-                        "max": 0
+                        "min": 100,
+                        "max": 100
                     }
                 },
-                "image_width": 100,
-                "image_height": 100
+                "sensor_position": {
+                    "x": 0.15,
+                    "y": 0.0,
+                    "z": 0.1
+                },
+                "sensor_orientation": {
+                    "roll": 0.0,
+                    "pitch": -90.0,
+                    "yaw": 0.0
+                },
+                "image_size": {
+                    "width": 640,
+                    "height": 520
+                },
+                "image_fps": 30
             }
         }
     ],

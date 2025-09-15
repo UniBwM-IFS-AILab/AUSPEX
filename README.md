@@ -6,21 +6,22 @@ In ancient Rome an auspex (latin for "one who observes the birds") was a priest 
 
 To cite **AUSPEX**, please use the following reference:
 ```
-@article{Doeschl-et-al:2025:AUSPEX,
-  author = {Bj{\"o}rn D{\"o}schl and Kai Sommer and Jane Jean Kiam},
-  title = {{AUSPEX: An Integrated Open-Source Decision-Making Framework for UAVs in Rescue Missions}},
-  publisher = {TechRxiv.org},
-  year = {2025},
-  month = {March},
-  doi = {10.36227/techrxiv.174123265.55724570/v1},
-  url = {https://www.techrxiv.org/doi/full/10.36227/techrxiv.174123265.55724570/v1}
+@article{10.3389/frobt.2025.1583479,
+   AUTHOR={D{\"o}schl, Bj{\"o}rn  and Sommer, Kai  and Kiam, Jane Jean },
+   TITLE={AUSPEX: An integrated open-source decision-making framework for UAVs in rescue missions},
+   JOURNAL={Frontiers in Robotics and AI},
+   VOLUME={Volume 12 - 2025},
+   YEAR={2025},
+   URL={https://www.frontiersin.org/journals/robotics-and-ai/articles/10.3389/frobt.2025.1583479},
+   DOI={10.3389/frobt.2025.1583479},
+   ISSN={2296-9144}
 }
 ```
 ---
 ## Overview
 
 AUSPEX is a modular framework for developing and validating AI planning algorithms for UAVs.
-It can be used together with [REAP](https://github.com/UniBwM-IFS-AILab/REAP) as simulation environment.
+It can be used in combination with [REAP](https://github.com/UniBwM-IFS-AILab/REAP) as simulation environment.
 
 <div align="center">
   <img src="system_overview.jpg" width="1000" height="500">
@@ -39,14 +40,13 @@ It can be used together with [REAP](https://github.com/UniBwM-IFS-AILab/REAP) as
 ### External components (Will be installed inside the Docker Container)
    * AirSim
    * PX4 Autopilot
-   * Micro-XRCE-DDS-Agent
 
 ## System requirements
 
 We tested AUSPEX using the following development environment:
-   * Windows 11
-   * WSL2 instance (Ubuntu 22.04 LTS)
-   * Docker
+   * Windows 11 with a WSL2 instance (Ubuntu 22.04 LTS)
+   * Native on Linux Ubuntu 24.04 LTS
+   * Docker installed and given sudo permissions (`sudo usermod -aG docker $USER`)
    * Nvidia-Container-Toolkit for TERRA and specific AVIS versions
 
 To enable visualization, ensure that Unreal Engine with the AirSim plugin is installed and running on the Windows 11 side. The confirmed working version of Unreal Engine for this setup is 4.27.2. If you're using Colosseum (an AirSim fork maintained by CodexLabsLLC), note that it supports Unreal Engine 5.2. To use Colosseum, follow the same installation steps as for AirSim, but substitute in the Colosseum repository from CodexLabsLLC.
@@ -62,16 +62,21 @@ The AUSPEX framework—which includes planning, execution, offboard control, and
 3. Launch the simulation Environment
 4. Start the docker container:
    ```
-   run_terra_vasa
+   runvasa
    ```
-5. In WSL Type:
+5. [Windows] In WSL Type:
    ```
    win_start_sim
    ```
    to start AUSPEX
+5. [Ubuntu] in a shell type:
+   ```
+   lin_start_sim
+   ```
+   to start AUSPEX
 6. Type:
    ```
-   start_command_publisher
+   run_cmd
    ```
    in the docker container and enter `start` to launch a mock plan.
 
@@ -86,8 +91,9 @@ Furthermore, AirSim requires a settings file to operate (should be located under
 ---
 
 ## Setup AUSPEX Terra (Groundstation and Simulation) with WSL2
-We are using WSL2 to host our AUSPEX system, where ROS2 and external components are installed inside a docker container.
-### 1. Setup WSL2 as Host System
+
+We are using either WSL2 on Windows or a native Ubuntu 24.04 to host our AUSPEX system, where ROS2 and external components are installed inside a docker container.
+### 1. Setup WSL2 as Host System (WINDOWS Setup)
 Before cloning this repository prepare an Ubuntu 22.04 WSL instance.
 The easiest way is to download a tarball, which contains an [Ubuntu 22.04 image](https://cloud-images.ubuntu.com/wsl/releases/22.04/current/).
 To import the image to your WSL open a PowerShell terminal and run:
@@ -104,7 +110,7 @@ Before running the WSL instance add:
 [wsl2]
 networkingMode=mirrored
 ```
-to the WSL config in Windows:
+to the WSL config in Windows (create one if not existing):
 ```
 C:\Users\YourUsername\.wslconfig
 ```
@@ -136,7 +142,19 @@ run one update and upgrade:
 ```
 sudo apt update && sudo apt upgrade
 ```
+to install docker follow [Docker Installtion Guide](https://docs.docker.com/engine/install/ubuntu/) and give permissions:
+```
+sudo usermod -aG docker $USER
+```
 Now you can set up your git configuration and begin the installation of AUSPEX.
+
+
+### 1.1 Open Ports for PX4 in WSL2 (Windows)
+
+Incoming TCP port 4560 and incoming UDP port 14540 are required for connecting PX4 running in WSL to the unreal simulation. The ports can be opened using the firewall configuration (run WF.msc -> left click inbound rules -> action: new rule).
+
+### 1. Setup Ubuntu as Host System (Linux)
+Install an Ubuntu version which supports docker (Ubuntu 24.04 recommended).
 
 ### 1.2 Git Configurations
 First create a Personal Access Token. This can be used for authentication without prompting for password and username on each GitHubAPI access. A manual can be found
@@ -147,9 +165,6 @@ And allow git to store your credentials:
 git config --global credential.helper store
 ```
 
-### 1.3 Open Ports for PX4 in WSL2
-
-Incoming TCP port 4560 and incoming UDP port 14540 are required for connecting PX4 running in WSL to the unreal simulation. The ports can be opened using the firewall configuration (run WF.msc -> left click inbound rules -> action: new rule).
 
 ### 2. Install the AUSPEX Framework (Terra Version)
 Inside your host system, for cloning this repository run:
@@ -180,36 +195,55 @@ cp ~/auspex_params/platform_properties/example_sim_platform_properties.json ~/au
 ```
 and type:
 ```
-ds ~/AUSPEX/ && python3 setup.py
+cd ~/AUSPEX/ && python3 setup.py
 ```
 to read in the variables form the platform properties file.
 Restart you WSL 2 instance or you host PC system.
 To build the docker container type:
 ```
-build_terra_vasa
+buildvasa
 ```
-This may take some time. After it is finished, the installation is done and ready to use.
-
+This may take some time.
+After building the container, start it and build all ROS 2 packages:
+```
+runvasa
+rebuild_auspex
+```
+After it is finished, the installation is done and ready to use.
 ---
 
-## Install AUSPEX AVIS (UAV Part) on Ubuntu:
+### 2. Install AUSPEX AVIS (UAV Part) on Ubuntu (AVIS Version):
 Follow the instructions from [Install AUSPEX TERRA](#2-install-the-auspex-framework-terra-version). To setup AUSPEX on a real UAV, use the **AVIS** keyword during installation instead of **TERRA** as described there.
 
 Overwrite the default ```platform_properties.json``` for each UAV to suite its respective capabilities. (Camera FOV, ...)
 ```
 nano ~/auspex_params/platform_properties/platform_properties.json
 ```
+and type:
+```
+cd ~/AUSPEX/ && python3 setup.py
+```
+to read in the variables form the platform properties file.
+To build the docker container for the platform type:
+```
+buildvasa
+```
+After building the container, start it and build all ROS 2 packages:
+```
+runvasa
+rebuild_auspex
+```
 Now the general setup is done and you are ready to use a real UAV with AUSPEX
 
 ---
 
-## Network Setup (Only needed for controlling real Hardware)
+## (Optional) Network Setup (Only needed for controlling real Hardware)
 
 When working with real UAVs, the UAVs and the AUSPEX system should be in the same local network (e.g. via Router, VPN or ROS 2 Bridges). Moreover, to use ROS 2 over a VPN a Discovery Server is necessary. Set up a discovery server and export its IP on the UAV, as well as every system which is part of AUSPEX:
 ```
 export ROS_DISCOVERY_SERVER=<DISCOVERY_IP>:11811
 ```
-For convenience, add the export commands to the ```~./bashrc```.
+For convenience, we already added this command in `AUSPEX/utils/user_exports.sh`.
 Auspex can be deployed on distributed hardware, as long as each system is connected to the Discovery Server.
 
 **Optional:** If the discovery server is not working, it is possible to set up the ROS 2 communication as peer to peer, multicast network. For this export the FASTRTPS_DEFAULT_PROFILES_FILE:

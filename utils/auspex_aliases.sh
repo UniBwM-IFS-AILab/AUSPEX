@@ -3,45 +3,39 @@ AUSPEX_HOME="/root/AUSPEX"
 
 # start/stop PX4 autopilot
 alias kill_px4="pkill -x px4 || true"
-alias start_px4_multiple="/root/scripts/sitl_multiple_run.sh"
+alias run_px4="/root/scripts/sitl_multiple_run.sh"
 
-# start uxrce agent
-alias start_rtps_agent="MicroXRCEAgent udp4 -p 8888"
-alias start_rtps_agent_pi="MicroXRCEAgent serial --dev /dev/ttyAMA0 -b 921600 -r ~/dds_local_setup.xml"
-alias start_rtps_agent_jetson='MicroXRCEAgent serial --dev /dev/ttyTHS0 -b 921600 -r ~/dds_local_setup.xml'
-alias start_avis_dds='fastdds discovery -i 1 -l 127.0.0.1 -p 11811'
+alias listen="ros2 run demo_nodes_cpp listener"
+alias talk="ros2 run demo_nodes_cpp talker"
 
 # start copernicus server
-alias start_copernicus_server="ros2 run auspex_knowledge copernicus_server"
+alias run_copernicus="ros2 run auspex_knowledge copernicus_server"
 
 # start/stop valkey
-alias start_valkey="$AUSPEX_HOME/utils/valkey_conf/start_valkey.sh"
+alias run_valkey="$AUSPEX_HOME/utils/valkey_conf/start_valkey.sh"
 alias stop_valkey="pkill valkey-server"
 
 # start AUSPEX_KNOW
-alias start_knowledge_main="sleep 2; ros2 run auspex_knowledge knowledge_main"
+alias run_know="sleep 2; ros2 run auspex_knowledge knowledge_main"
 
 # start AUSPEX_AERO
-alias start_offboard_control="sleep 3; ros2 launch auspex_obc auspex_obc.launch.py"
-
-# start UP4ROS
-alias start_up4ros="ros2 launch upf4ros2 upf4ros2.launch.py"
+alias run_aero="sleep 3; ros2 launch auspex_obc auspex_obc.launch.py"
 
 # start AUSPEX_EXEC
-alias start_executor_main="ros2 launch auspex_executor start_executor_main.launch.py"
+alias run_exec="ros2 launch auspex_executor start_executor_main.launch.py"
 
 # start AUSPEX_PLAN
-alias start_planning_main="sleep 3; ros2 launch auspex_planning start_planning_main.launch.py"
+alias run_plan="sleep 3; ros2 launch auspex_planning start_planning_main.launch.py"
 
 # start AUSPEX_SENS
-alias start_perception_main="ros2 launch auspex_perception start_perception_main.launch.py"
+alias run_sens="ros2 launch auspex_perception start_perception_main.launch.py"
 
 # start command publisher
-alias start_command_publisher="ros2 run auspex_planning planning_command_publisher"
+alias run_cmd="ros2 run auspex_planning planning_command_publisher"
 
 # start rosbridge server
-alias start_rosbridge="ros2 launch rosbridge_server rosbridge_websocket_launch.xml"
-alias start_rosbridge_ip="ros2 launch rosbridge_server rosbridge_websocket_launch.xml address:="
+alias run_bridge="ros2 launch rosbridge_server rosbridge_websocket_launch.xml"
+alias run_bridge_ip="ros2 launch rosbridge_server rosbridge_websocket_launch.xml address:="
 
 alias test_takeoff="ros2 action send_goal /vhcl0/takeoff auspex_msgs/action/Takeoff '{takeoff_height: 300}'"
 alias test_land="ros2 action send_goal /vhcl0/land auspex_msgs/action/Land '{land_speed: 1}'"

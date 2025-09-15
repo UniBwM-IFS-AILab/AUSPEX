@@ -27,4 +27,3 @@ else
     source_auspex_msgs
     source_auspex_aero
 fi
-

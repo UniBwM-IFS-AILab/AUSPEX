@@ -43,12 +43,7 @@ add_to_file_if_not_present "source $HOST_AUSPEX_DIR/AUSPEX-VASA/scripts/vasa_ali
 
 if [ ! -f "$HOST_AUSPEX_DIR/utils/user_exports.sh" ]; then
     echo "copying initial user_exports file."
-    if [ $AUSPEX_PLATFORM == "TERRA" ]; then
-        cp "$HOST_AUSPEX_DIR/utils/user_exports/user_exports_templ_terra.sh" "$HOST_AUSPEX_DIR/utils/user_exports.sh"
-    else
-        cp "$HOST_AUSPEX_DIR/utils/user_exports/user_exports_templ_avis.sh" "$HOST_AUSPEX_DIR/utils/user_exports.sh"
-    fi
-
+    cp "$HOST_AUSPEX_DIR/utils/user_exports/user_exports_templ.sh" "$HOST_AUSPEX_DIR/utils/user_exports.sh"
     sed -i "s|^export AUSPEX_PLATFORM=.*|export AUSPEX_PLATFORM=$AUSPEX_PLATFORM|" "$HOST_AUSPEX_DIR/utils/user_exports.sh"
 else
     echo "user_exports already exists."
@@ -57,17 +52,14 @@ fi
 # updating the submodules respective to the platform in use
 if [ $AUSPEX_PLATFORM == "TERRA" ]; then
     echo "cloning repository for "down to earth""
-    cd $HOST_AUSPEX_DIR && git submodule update --init --recursive AUSPEX-PLAN AUSPEX-EXEC AUSPEX-MSGS AUSPEX-KNOW AUSPEX-AERO AUSPEX-VASA
+    cd $HOST_AUSPEX_DIR && git submodule update --init --recursive AUSPEX-PLAN AUSPEX-EXEC AUSPEX-MSGS AUSPEX-KNOW AUSPEX-AERO AUSPEX-VASA AUSPEX-SENS
 
 elif [ $AUSPEX_PLATFORM == "AVIS" ]; then
     echo "cloning repository for "in the sky""
-    cd $HOST_AUSPEX_DIR && git submodule update --init AUSPEX-MSGS AUSPEX-AERO AUSPEX-VASA
-    cd AUSPEX-AERO
-    git submodule update --init --recursive
+    cd $HOST_AUSPEX_DIR && git submodule update --init --recursive AUSPEX-MSGS AUSPEX-AERO AUSPEX-VASA
 fi
 
 cd $HOST_AUSPEX_DIR/AUSPEX-AERO
-git submodule update --init --recursive
 git checkout main > /dev/null 2>&1
 
 # clone AUSPEX-VASA
@@ -76,7 +68,6 @@ git checkout main > /dev/null 2>&1
 
 # clone AUSPEX-MSGS
 cd $HOST_AUSPEX_DIR/AUSPEX-MSGS
-git submodule update --init --recursive
 git checkout main > /dev/null 2>&1
 cd src/UPF4ROS2
 git sparse-checkout init --cone
@@ -89,13 +80,11 @@ if [ $AUSPEX_PLATFORM == "TERRA" ]; then
     # clone AUSPEX-SENS
     echo "installing(git): SENS ..."
     cd $HOST_AUSPEX_DIR/AUSPEX-SENS
-    git submodule update --init --recursive
     git checkout main > /dev/null 2>&1
 
     # clone AUSPEX-PLAN
     echo "installing(git): PLAN ..."
     cd $HOST_AUSPEX_DIR/AUSPEX-PLAN
-    git submodule update --init --recursive
     git checkout main > /dev/null 2>&1
     cd src/UPF4ROS2
     git sparse-checkout init --cone
