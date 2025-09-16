@@ -18,12 +18,12 @@
             "specifications": {
                 "fov": {
                     "horizontal": {
-                        "min": 100,
-                        "max": 100
+                        "min": 60,
+                        "max": 60
                     },
                     "vertical": {
-                        "min": 100,
-                        "max": 100
+                        "min": 60,
+                        "max": 60
                     }
                 },
                 "sensor_position": {
