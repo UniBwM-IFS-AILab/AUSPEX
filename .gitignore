@@ -1,2 +1,5 @@
 utils/user_exports.sh
 .bash_history
+utils/ovpn/*.ovpn
+utils/ovpn/*.log
+utils/ovpn/auth.txt

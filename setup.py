@@ -29,6 +29,11 @@ def add_or_replace(export_file: Path, var: str, val: str):
     export_file.write_text("\n".join(out).rstrip() + "\n")
 
 def main():
+    print("Setting up user environment variables...")
+    print("Available FC_TYPE options: PX4_SIMULATED, PX4, ARDUPILOT, ANAFI")
+    print("Available OBC_TYPE options: PI, JETSON, DESKTOP")
+    print("Available CAM_TYPE options: RPI5, ZT30, SIM_UE, SIM_IS, NONE")
+
     home = Path.home()
     JSON_FILE    = home / "auspex_params" / "platform_properties" / "platform_properties.json"
     AUSPEX_HOME  = home / "AUSPEX"
@@ -55,8 +60,8 @@ def main():
 
     print(f"Updated {EXPORT_FILE} with:")
     print(f"   FC_TYPE  = {fc_type}")
-    print(f"   OBC_TYPE = {obc_type}")
     print(f"   CAM_TYPE = {cam_type}")
+    print(f"   OBC_TYPE = {obc_type}")
 
 if __name__ == "__main__":
     main()

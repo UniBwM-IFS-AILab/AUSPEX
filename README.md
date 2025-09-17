@@ -71,9 +71,9 @@ The AUSPEX framework—which includes planning, execution, offboard control, and
    to start AUSPEX
 5. [Ubuntu] in a shell type:
    ```
-   lin_start_ue_sim
+   lin_start_sim
    ```
-   to start AUSPEX for Unreal Engine (replace `ue` with `is` for the Isaac Sim interface)
+   to start AUSPEX
 6. Type:
    ```
    run_cmd
