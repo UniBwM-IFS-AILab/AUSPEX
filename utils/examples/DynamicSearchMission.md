@@ -17,7 +17,7 @@ Ensure Unreal Engine and AirSim are also installed on your system. An exemplary 
 To run use case 3 "Dynamic Search Mission", follow the instructions below.
 
 1. First define the initial language input in the ```example_mission.json``` located at ```~/auspex_params/mission/``` at the ````mission_goal``` field Additionally, complete the rest of the file, with the ```<team_id>```, and other constraints.
-2. Open the ```planner_config.json``` and enter ```llm_planner``` to select this planner for your ```<team_id>``` (defined in the ```platform_properties.json```):
+2. Open the ```plan_config.json``` and enter ```llm_planner``` to select this planner for your ```<team_id>``` (defined in the ```platform_properties.json```):
     ```
     [
         {

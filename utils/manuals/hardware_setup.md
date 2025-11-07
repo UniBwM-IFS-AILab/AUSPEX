@@ -1,16 +1,10 @@
 ### A guide on how to set up real hardware with AUSPEX
 ---
 # Setup Multikopter MK-U20 (Ardupilot)
-## 1. Setup for the Orange Cube Plus (PX4 v1.15.4)
-- Prepare px4 version v1.15.4 with cubepilot_cubeorangeplus_default and custom:
-    ```
-    git clone -b v1.15.4 https://github.com/PX4/PX4-Autopilot.git
-    cd PX4-Autopilot
-    make cubepilot_cubeorangeplus_default
-    ```
-- Copy the PX4-Autopilot/build/cubepilot_cubeorangeplus_default folder to your host system and prepare the .px4 file.
-- Install Mission planner and Upload firmware
-    - Select Custom Firmware on Mission planner and select the .px4 file from the previous step.
+## 1. Hardware Setup
+
+## 2. Setup for the Orange Cube Plus (PX4 v1.15.4)
+
 - Install QGroundControl and connect to UAV
 - Start QGC and calibrate.
     - For this it is possible to use the telemetry antennas to avoid the cable
@@ -40,22 +34,20 @@
     Set SER_Tel2_Baud to 57600
     ```
 
-## 2. Setup for Jetson Xavier NX
+## 3. Setup for Jetson Xavier NX
 
 - The TTYTHS0 device is used to interface the Orange Cube+.
 
-- Install auspex and vasa etc.
+- Install AUSPEX from the [Repo](https://github.com/UniBwM-IFS-AILab/AUSPEX/tree/main?tab=readme-ov-file) and follow the steps there
 
 ---
 
 # Setup Holybro X500 v2 (PX4)
-## 1. Setup for the PixHawk 6c (PX4 v1.15.4)
-- Prepare Custom v1.15.4 Firmware with dds_conf.yaml
-    ```
-    git clone -b v1.15.4 https://github.com/PX4/PX4-Autopilot.git
-    cd PX4-Autopilot
-    make px4_fmu-v6c_default
-    ```
+
+## 1. Hardware Setup
+
+## 2. Setup for the PixHawk 6c (PX4 v1.15.4)
+
 - For mavsdk via GQC:
     ```
     set MAV_0_CONFIG to Telem2
@@ -66,7 +58,8 @@
 - Also set MAV_0_CONFIG to TELEM 1 to enable SIK Holybro Telemetry
 - Check Failsafe Flags in QGC
 
-## 2. Setup for the Raspberry PI 5
+## 3. Setup for the Raspberry PI 5
+
 - Install supported OS
 - update current packages:
     ```
@@ -117,16 +110,9 @@
     ```
     buildvasa
     ```
-- Clone Menthon-WS
-- Create openvpn folder and add vpn configs
-    ```
-    mkdir ~/openvpn
-    # add configs as x.client.ovpn
-    ```
-- Connect to USB Sim Card Network
-    - Set up USB-Modem
-        - Connect USB-Modem to a PC and connect to its Wi-Fi (password written on the USB-Stick)
-        - Type 192.168.0.1 into your browser and set up Wi-Fi name to hummingbirdX_network with a password
+- Edit openvpn configs in the ~/AUSPEX/utils/ovpn/ folder
+
+- Connect to Wi-Fi on RPI
     - On RPI
         - first refresh your Wi-Fi list:
         ```
@@ -135,9 +121,9 @@
         ```
         - and then add the Wi-Fi to your known networks:
         ```
-        sudo nmcli connection add type wifi ifname '*' con-name hummingbirdX_network ssid "hummingbirdX_network" wifi-sec.key-mgmt wpa-psk wifi-sec.psk "password" connection.autoconnect no
+        sudo nmcli connection add type wifi ifname '*' con-name <name> ssid "<ssid>" wifi-sec.key-mgmt wpa-psk wifi-sec.psk "<password>" connection.autoconnect no
         ```
         - if a connection should be established (Not necessary; after reboot, it will auto-connect if the network is available):
         ```
-        sudo nmcli connection up hummingbirdX_network
+        sudo nmcli connection up <ssid>
         ```

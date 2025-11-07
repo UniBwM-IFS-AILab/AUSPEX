@@ -23,7 +23,7 @@ After AUSPEX is installed on the UAV and the Base station, it is important to se
 To run use case 1 "Search Mission", follow the instructions below.
 
  1. First construct your problem and domain file. These files can be found in the base station AUSPEX installation in ```~/AUSPEX/AUSPEX-PLAN/src/auspex_planning/pddl/```. For defining PDDL files, you can look up [UP](https://unified-planning.readthedocs.io/en/latest/).
- 2. Open the ```planner_config.json``` and enter ```pddl_planner``` to select this planner for your ```<team_id>``` (defined in the ```platform_properties.json```):
+ 2. Open the ```plan_config.json``` and enter ```pddl_planner``` to select this planner for your ```<team_id>``` (defined in the ```platform_properties.json```):
     ```
     [
         {

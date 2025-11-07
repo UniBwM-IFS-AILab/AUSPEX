@@ -8,9 +8,12 @@ alias lin_start_gcs="$AUSPEX_HOST_DIR/utils/startup_scripts/lin_start_gcs.sh"
 alias lin_start_ue_sim="$AUSPEX_HOST_DIR/utils/startup_scripts/ue_lin_start_sim.sh"
 alias lin_start_is_sim="$AUSPEX_HOST_DIR/utils/startup_scripts/is_lin_start_sim.sh"
 
-alias kill_sim="iv 'kill_px4 && pkill -f copernicus_serv && pkill -f valkey-server && pkill -f knowledge_main && pkill -f auspex_obc && pkill -f upf4ros2_main && pkill -f image_processin && pkill -f executor_main_n && pkill -f planning_main_n'"
+alias kill_sim="iv 'kill_px4 && pkill -f copernicus_serv && pkill -f valkey-server && pkill -f knowledge_main && pkill -f auspex_obc && pkill -f upf4ros2_main && pkill -f executor_main_n && pkill -f planning_main_n'"
 alias install_auspex="cd $AUSPEX_HOST_DIR/ && ./install.sh TERRA"
 alias setup_auspex="cd $AUSPEX_HOST_DIR/ && ./setup.py"
+alias pull_auspex="$AUSPEX_HOST_DIR/utils/dev_scripts/pull_auspex.sh"
+
+alias edit_properties="nano /home/$USER/auspex_params/platform_properties/platform_properties.json"
 
 # Directory Aliases
 alias aero="cd $AUSPEX_HOST_DIR/AUSPEX-AERO/"
@@ -21,6 +24,7 @@ alias exec="cd $AUSPEX_HOST_DIR/AUSPEX-EXEC"
 alias plan="cd $AUSPEX_HOST_DIR/AUSPEX-PLAN"
 alias know="cd $AUSPEX_HOST_DIR/AUSPEX-KNOW"
 alias auspex="cd ~/AUSPEX"
+alias params="cd ~/auspex_params"
 
 alias startvpn="$AUSPEX_HOST_DIR/utils/ovpn/connect-vpn.sh"
 alias stopvpn="sudo pkill -SIGINT openvpn"

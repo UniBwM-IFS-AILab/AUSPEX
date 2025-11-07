@@ -1,4 +1,7 @@
 #!/bin/bash
+
+sudo pkill -SIGINT openvpn
+
 OVPN_DIR="$HOME/AUSPEX/utils/ovpn"
 
 echo $OVPN_DIR

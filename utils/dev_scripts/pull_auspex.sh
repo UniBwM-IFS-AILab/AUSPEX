@@ -2,38 +2,42 @@
 # a script to pull all AUSPEX-x submodules
 AUSPEX_HOME=~/AUSPEX
 
+cd $AUSPEX_HOME
+echo "pulling AUSPEX"
+git pull
+
 # pull MSG
-echo "building AUSPEX-MSGS"
+echo "pulling AUSPEX-MSGS"
 cd $AUSPEX_HOME/AUSPEX-MSGS
 git pull
 
 # pull OBC
-echo "building AUSPEX-AERO"
+echo "pulling AUSPEX-AERO"
 cd $AUSPEX_HOME/AUSPEX-AERO
 git pull
 
-echo "building AUSPEX-VASA"
+echo "pulling AUSPEX-VASA"
 cd $AUSPEX_HOME/AUSPEX-VASA
 git pull
 
 if [ $AUSPEX_PLATFORM == "TERRA" ]; then
     # pull EXE
-    echo "building AUSPEX-EXEC"
+    echo "pulling AUSPEX-EXEC"
     cd $AUSPEX_HOME/AUSPEX-EXEC
     git pull
 
     # pull PLN
-    echo "building AUSPEX-PLAN"
+    echo "pulling AUSPEX-PLAN"
     cd $AUSPEX_HOME/AUSPEX-PLAN
     git pull
 
     # pull DPM
-    echo "building AUSPEX-SENS"
+    echo "pulling AUSPEX-SENS"
     cd $AUSPEX_HOME/AUSPEX-SENS
     git pull
 
     # pull WKB
-    echo "building AUSPEX-KNOW"
+    echo "pulling AUSPEX-KNOW"
     cd $AUSPEX_HOME/AUSPEX-KNOW
     git pull
 fi

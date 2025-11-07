@@ -17,7 +17,7 @@ Ensure Unreal Engine and AirSim are also installed on your system. An exemplary 
 To run use case 4 "Multi-UAV Coordination", follow the instructions below.
 
 1. First define the waypoints in the ```areas.json``` located at ```~/auspex_params/geographic/areas/```. Enter the latitude. longitude and altitude of each point to be visited.
-2. Open the ```planner_config.json``` and enter ```mvrp_alns_planner``` to select this planner for your ```<team_id>``` (defined in the ```platform_properties.json```) and specify the objective function to be used (here: "shortest_distance"):
+2. Open the ```plan_config.json``` and enter ```mvrp_alns_planner``` to select this planner for your ```<team_id>``` (defined in the ```platform_properties.json```) and specify the objective function to be used (here: "shortest_distance"):
     ```
     [
         {

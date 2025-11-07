@@ -17,7 +17,7 @@ Ensure Unreal Engine and AirSim are also installed on your system. An exemplary 
 To run use case 2 "Reconnaissance Mission", follow the instructions below.
 
 1. First define the search area in the ```example_mission.json``` located at ```~/auspex_params/mission/```. Enter the description and at least three GPS points to the list, spanning the search area. Additionally, complete the rest of the file, with the ```<team_id>```, no-fly zones, and other constraints.
-2. Open the ```planner_config.json``` and enter ```pattern_planner``` to select this planner for your ```<team_id>``` (defined in the ```platform_properties.json```):
+2. Open the ```plan_config.json``` and enter ```pattern_planner``` to select this planner for your ```<team_id>``` (defined in the ```platform_properties.json```):
     ```
     [
         {

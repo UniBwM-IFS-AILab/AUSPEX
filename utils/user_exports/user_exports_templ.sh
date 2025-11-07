@@ -1,16 +1,6 @@
 # contains user-specific enviroment variables
 
 export AUSPEX_DB_IP=""
-export MSG_CONTEXT=AUSPEX
-export DISCOVERY_SERVER=AUSPEX
-
-if [ "$DISCOVERY_SERVER" == "MENTHON" ]; then
-    export ROS_DISCOVERY_SERVER="192.168.50.243:11811"
-elif [ "$DISCOVERY_SERVER" == "AUSPEX" ]; then
-    export ROS_DISCOVERY_SERVER="192.168.50.1:11811"
-else
-    unset ROS_DISCOVERY_SERVER
-fi
 
 export AUSPEX_PLATFORM=TERRA
 export FC_TYPE=NONE

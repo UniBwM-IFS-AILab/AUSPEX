@@ -28,7 +28,7 @@ alias run_exec="ros2 launch auspex_executor start_executor_main.launch.py"
 alias run_plan="sleep 3; ros2 launch auspex_planning start_planning_main.launch.py"
 
 # start AUSPEX_SENS
-alias run_sens="ros2 launch auspex_perception start_perception_main.launch.py"
+alias run_sens="echo SENS is not running"
 
 # start command publisher
 alias run_cmd="ros2 run auspex_planning planning_command_publisher"
@@ -55,9 +55,6 @@ alias source_auspex_aero="source $AUSPEX_HOME/AUSPEX-AERO/install/setup.bash"
 alias source_auspex_msgs="source $AUSPEX_HOME/AUSPEX-MSGS/install/setup.bash"
 alias source_auspex_know="source $AUSPEX_HOME/AUSPEX-KNOW/install/setup.bash"
 
-# source MENTHON workspace
-alias source_menthon_ws="source /root/MENTHON-WS/install/setup.bash"
-
 alias source_all="source_auspex_exec && source_auspex_plan && source_auspex_sens && source_auspex_msgs && source_auspex_aero && source_auspex_know"
 
 alias build_exec="cd $AUSPEX_HOME/AUSPEX-EXEC && colcon build"
@@ -68,16 +65,13 @@ alias build_aero="cd $AUSPEX_HOME/AUSPEX-AERO && colcon build"
 alias build_know="cd $AUSPEX_HOME/AUSPEX-KNOW && colcon build"
 
 alias rebuild_auspex="$AUSPEX_HOME/utils/dev_scripts/rebuild_auspex.sh"
+alias build_auspex="$AUSPEX_HOME/utils/dev_scripts/build_auspex.sh"
 alias clean_auspex="$AUSPEX_HOME/utils/dev_scripts/clean_auspex.sh"
-alias pull_auspex="$AUSPEX_HOME/utils/dev_scripts/pull_auspex.sh"
 
 alias buinvasa="invasa rebuild_auspex"
 
 alias eb='sudo nano ~/.bashrc'
 alias sb='source ~/.bashrc'
-
-alias set_msg_ctx="$AUSPEX_HOME/utils/dev_scripts/set_msg_context.sh"
-alias set_disc_server="$AUSPEX_HOME/utils/dev_scripts/set_discovery_server.sh"
 
 alias aero='cd ~/AUSPEX/AUSPEX-AERO/'
 alias vasa='cd ~/AUSPEX/AUSPEX-VASA/'

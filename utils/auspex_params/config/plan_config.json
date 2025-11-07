@@ -1,0 +1,12 @@
+[
+    {
+        "team_id": "ul_team",
+        "planner": "pattern_planner",
+        "params": []
+    },
+    {
+        "team_id": "drone_team",
+        "planner": "mock_planner",
+        "params": []
+    }
+]

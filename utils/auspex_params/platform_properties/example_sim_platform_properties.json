@@ -5,25 +5,25 @@
         "model": "AirSim Multikopter",
         "flight_controller":"PX4_SIMULATED",
         "offboard_controller":"DESKTOP",
-        "max_flight_duration": 45.0,
+        "max_flight_duration": 25.0,
         "max_flight_height": 120.0,
-        "max_velocity": 20.0,
-        "turning_radius": 0.0
+        "max_velocity": 1.5,
+        "turning_radius": 1.0
     },
     "sensors":[
         {
             "id": "id1",
             "type": "eo_camera",
-            "model":"SIM_UE",
+            "model":"SIM_IS",
             "specifications": {
                 "fov": {
                     "horizontal": {
-                        "min": 60,
-                        "max": 60
+                        "min": 10,
+                        "max": 10
                     },
                     "vertical": {
-                        "min": 60,
-                        "max": 60
+                        "min": 10,
+                        "max": 10
                     }
                 },
                 "sensor_position": {
@@ -40,7 +40,7 @@
                     "width": 640,
                     "height": 520
                 },
-                "image_fps": 30
+                "image_fps": 5
             }
         }
     ],
