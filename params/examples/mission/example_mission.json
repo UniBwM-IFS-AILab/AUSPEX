@@ -1,0 +1,132 @@
+{
+    "header": {
+        "stamp": {
+            "sec": 1738333629,
+            "nanosec": 533620559
+        },
+        "frame_id": "0"
+    },
+    "team_id": "drone_team",
+    "platform_class": {
+        "value": 1
+    },
+    "search_area": {
+        "type": 1,
+        "description": "UL search area",
+        "points": [
+            {
+                "latitude": 48.08146432213498,
+                "longitude": 11.62969696126483,
+                "altitude": 0.0
+            },
+            {
+                "latitude": 48.08146432213498,
+                "longitude": 11.62969696126483,
+                "altitude": 0.0
+            },
+            {
+                "latitude": 48.07579596587104,
+                "longitude": 11.62250263787908,
+                "altitude": 0.0
+            },
+            {
+                "latitude": 48.06923548599489,
+                "longitude": 11.6192706845395,
+                "altitude": 0.0
+            },
+            {
+                "latitude": 48.06839982743332,
+                "longitude": 11.62932268875868,
+                "altitude": 0.0
+            },
+            {
+                "latitude": 48.06704919114334,
+                "longitude": 11.64231967635742,
+                "altitude": 0.0
+            },
+            {
+                "latitude": 48.06665360685336,
+                "longitude": 11.64904248153289,
+                "altitude": 0.0
+            },
+            {
+                "latitude": 48.07145530869484,
+                "longitude": 11.65177618059545,
+                "altitude": 0.0
+            },
+            {
+                "latitude": 48.07781971845527,
+                "longitude": 11.65107120845246,
+                "altitude": 0.0
+            },
+            {
+                "latitude": 48.08139341356903,
+                "longitude": 11.64963499386203,
+                "altitude": 0.0
+            },
+            {
+                "latitude": 48.08135634001355,
+                "longitude": 11.6306110659647,
+                "altitude": 0.0
+            }
+        ]
+    },
+    "no_fly_zones": [
+        {
+            "type": 0,
+            "description": "no fly zone 1",
+            "points": [
+                {
+                    "latitude": 48.08199600653093,
+                    "longitude": 11.6324937078295,
+                    "altitude": 0.0
+                },
+                {
+                    "latitude": 48.0857198309636,
+                    "longitude": 11.63236503143664,
+                    "altitude": 0.0
+                },
+                {
+                    "latitude": 48.08568993703905,
+                    "longitude": 11.62753928191168,
+                    "altitude": 0.0
+                },
+                {
+                    "latitude": 48.0828065513013,
+                    "longitude": 11.62763431811025,
+                    "altitude": 0.0
+                },
+                {
+                    "latitude": 48.08272261536398,
+                    "longitude": 11.62819207767211,
+                    "altitude": 0.0
+                },
+                {
+                    "latitude": 48.08198795897651,
+                    "longitude": 11.62861543767918,
+                    "altitude": 0.0
+                },
+                {
+                    "latitude": 48.08199600653093,
+                    "longitude": 11.6324937078295,
+                    "altitude": 0.0
+                }
+            ]
+        }
+    ],
+    "max_height": 1000,
+    "min_height": 200,
+    "desired_ground_dist": 20,
+    "starting_point": {
+        "latitude": 48.06855033584622,
+        "longitude": 11.640882687881923,
+        "altitude": 0.0
+    },
+    "mission_goal": "Not all those who wander are lost",
+    "pois": [],
+    "prio_areas": [],
+    "sensor_mode": {
+        "value": 0
+    },
+    "danger_zones": []
+}

@@ -1,0 +1,1 @@
+## Prepare the A Linux Desktop PC for AUSPEX

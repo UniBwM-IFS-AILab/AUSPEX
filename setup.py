@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-import json
 import os
 import re
 import sys
 from pathlib import Path
+import yaml
 
-def load_json(path: Path):
+def load_yaml(path: Path):
     if not path.is_file():
-        print(f"ERROR: JSON file not found: {path}", file=sys.stderr)
+        print(f"ERROR: YAML file not found: {path}", file=sys.stderr)
         sys.exit(1)
-    return json.loads(path.read_text())
+    with path.open("r", encoding="utf-8") as file:
+        return yaml.safe_load(file)
 
 def add_or_replace(export_file: Path, var: str, val: str):
     lines = export_file.read_text().splitlines() if export_file.exists() else []
@@ -31,34 +32,38 @@ def add_or_replace(export_file: Path, var: str, val: str):
 def main():
     print("Setting up user environment variables...")
     print("Available FC_TYPE options: PX4_SIMULATED, PX4, ARDUPILOT, ANAFI")
-    print("Available OBC_TYPE options: PI, JETSON, DESKTOP")
+    print("Available OBC_TYPE options: PI, JETSON_XAVIER_NX, JETSON_ORIN_NX, DESKTOP")
     print("Available CAM_TYPE options: RPI5, ZT30, SIM_UE, SIM_IS, NONE")
 
     home = Path.home()
-    JSON_FILE    = home / "auspex_params" / "platform_properties" / "platform_properties.json"
     AUSPEX_HOME  = home / "AUSPEX"
+    YAML_FILE    = AUSPEX_HOME / "params" / "platform_properties" / "platform_properties.yaml"
     EXPORT_FILE  = AUSPEX_HOME / "utils" / "user_exports.sh"
 
-    data = load_json(JSON_FILE)
+    data = load_yaml(YAML_FILE)
+    general = data.get("general", {})
 
-    fc_type  = data["platform_details"]["flight_controller"]
-    obc_type = data["platform_details"]["offboard_controller"]
+    platform_name = f'"{general["platform_id"]}"'
+    fc_type  = general["flight_controller"]
+    obc_type = general["offboard_controller"]
 
     cams = [
         s["model"]
-        for s in data.get("sensors", [])
+        for s in data.get("peripheral_devices", [])
         if "camera" in s.get("type", "").lower()
     ]
 
-    cam_type = f"\"{';'.join(cams)}\""
+    cam_type = "\"NONE\"" if not cams else f"\"{';'.join(cams)}\""
 
     EXPORT_FILE.parent.mkdir(parents=True, exist_ok=True)
 
+    add_or_replace(EXPORT_FILE, "PLATFORM_NAME", platform_name)
     add_or_replace(EXPORT_FILE, "FC_TYPE",  fc_type)
     add_or_replace(EXPORT_FILE, "OBC_TYPE", obc_type)
     add_or_replace(EXPORT_FILE, "CAM_TYPE", cam_type)
 
     print(f"Updated {EXPORT_FILE} with:")
+    print(f"   PLATFORM_NAME = {platform_name}")
     print(f"   FC_TYPE  = {fc_type}")
     print(f"   CAM_TYPE = {cam_type}")
     print(f"   OBC_TYPE = {obc_type}")

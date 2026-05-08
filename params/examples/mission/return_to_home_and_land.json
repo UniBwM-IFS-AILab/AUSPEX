@@ -1,0 +1,12 @@
+[
+    {
+        "platform_id": "",
+        "team_id": "",
+        "priority": 99,
+        "actions": [
+            {"name": "fly_3D", "args": ["home"]},
+            {"name": "hover", "args": ["4000"]},
+            {"name": "land", "args": []}
+        ]
+    }
+]

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUSPEX Area Editor</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        #map { width: 100%; height: 100vh; }
+
+        #toolbar {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+            transition: background 0.15s;
+        }
+
+        #btnCreateArea {
+            background: #2196F3;
+            color: white;
+        }
+        #btnCreateArea:hover { background: #1976D2; }
+        #btnCreateArea.active { background: #FF9800; }
+
+        #btnExportAreas {
+            background: #4CAF50;
+            color: white;
+        }
+        #btnExportAreas:hover { background: #388E3C; }
+
+        #btnFinish {
+            background: #4CAF50;
+            color: white;
+            display: none;
+        }
+        #btnFinish:hover { background: #388E3C; }
+
+        #btnCancel {
+            background: #f44336;
+            color: white;
+            display: none;
+        }
+        #btnCancel:hover { background: #d32f2f; }
+
+        #altitudeBox {
+            display: none;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+            font-size: 13px;
+        }
+        #altitudeBox label { font-weight: 600; }
+        #altitudeBox input {
+            width: 70px;
+            padding: 4px 6px;
+            margin-left: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #status {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(0,0,0,0.75);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: none;
+            pointer-events: none;
+        }
+
+        #areaList {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            z-index: 1000;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            max-height: 50vh;
+            overflow-y: auto;
+            min-width: 180px;
+            display: none;
+        }
+        #areaList h3 {
+            padding: 10px 14px 6px;
+            font-size: 14px;
+            border-bottom: 1px solid #eee;
+            margin: 0;
+        }
+        .area-item {
+            padding: 6px 14px;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .area-item:hover { background: #f5f5f5; }
+        .area-item .delete-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        .area-item .delete-btn:hover { background: #d32f2f; }
+
+        /* Area label tooltips (multi-line) */
+        .leaflet-tooltip.area-label {
+            white-space: pre-line;
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        /* Modal for JSON export */
+        #exportModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        #exportModal.show { display: flex; }
+        #exportModal .modal-content {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+        #exportModal h2 { margin-bottom: 12px; font-size: 18px; }
+        #exportModal textarea {
+            flex: 1;
+            min-height: 300px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            padding: 12px;
+            resize: vertical;
+        }
+        #exportModal .modal-buttons {
+            margin-top: 12px;
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+        #exportModal .modal-buttons button {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+        #btnLoadAreas {
+            background: #FF9800;
+            color: white;
+        }
+        #btnLoadAreas:hover { background: #F57C00; }
+
+        #btnCopyJson { background: #2196F3; color: white; }
+        #btnDownloadJson { background: #4CAF50; color: white; }
+        #btnCloseModal { background: #757575; color: white; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <div id="toolbar">
+        <button id="btnCreateArea">&#x2795; Create Area</button>
+        <button id="btnFinish">&#x2714; Finish Area</button>
+        <button id="btnCancel">&#x2716; Cancel</button>
+        <div id="altitudeBox">
+            <label>Altitude (m): <input type="number" id="altitudeInput" value="25.0" step="1"></label>
+        </div>
+        <button id="btnLoadAreas">&#x1F4C2; Load Areas JSON</button>
+        <input type="file" id="fileInput" accept=".json" style="display:none">
+        <button id="btnExportAreas">&#x1F4E5; Export Areas</button>
+    </div>
+
+    <div id="areaList">
+        <h3>Areas</h3>
+        <div id="areaListItems"></div>
+    </div>
+
+    <div id="status"></div>
+
+    <div id="exportModal">
+        <div class="modal-content">
+            <h2>Export Areas (JSON)</h2>
+            <textarea id="jsonOutput" readonly></textarea>
+            <div class="modal-buttons">
+                <button id="btnCopyJson">Copy</button>
+                <button id="btnDownloadJson">Download</button>
+                <button id="btnCloseModal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ── State ──────────────────────────────────────────────
+        let areas = [];          // { name, points[[lat,lng,alt]], polygon, id }
+        let areaCounter = 0;
+        let drawing = false;
+        let currentMarkers = []; // leaflet markers for current drawing
+        let currentLatLngs = []; // [[lat, lng]] raw coords
+        let previewLine = null;
+
+        // ── Map ────────────────────────────────────────────────
+        const map = L.map('map', { zoomControl: true }).setView([48.076, 11.638], 16);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 22,
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // ── DOM refs ───────────────────────────────────────────
+        const btnCreate   = document.getElementById('btnCreateArea');
+        const btnFinish   = document.getElementById('btnFinish');
+        const btnCancel   = document.getElementById('btnCancel');
+        const btnExport   = document.getElementById('btnExportAreas');
+        const altBox      = document.getElementById('altitudeBox');
+        const altInput    = document.getElementById('altitudeInput');
+        const statusEl    = document.getElementById('status');
+        const areaListEl  = document.getElementById('areaList');
+        const areaItemsEl = document.getElementById('areaListItems');
+        const exportModal = document.getElementById('exportModal');
+        const jsonOutput  = document.getElementById('jsonOutput');
+
+        // ── Helpers ────────────────────────────────────────────
+        function showStatus(msg, duration = 2500) {
+            statusEl.textContent = msg;
+            statusEl.style.display = 'block';
+            clearTimeout(showStatus._t);
+            showStatus._t = setTimeout(() => statusEl.style.display = 'none', duration);
+        }
+
+        function updateAreaListUI() {
+            areaListEl.style.display = areas.length ? 'block' : 'none';
+            areaItemsEl.innerHTML = '';
+            areas.forEach((a, i) => {
+                const div = document.createElement('div');
+                div.className = 'area-item';
+                const size = formatArea(computeAreaSqm(a.points));
+                div.innerHTML = `<span>${a.name} (${a.points.length} pts, ${size})</span>
+                    <button class="delete-btn" data-idx="${i}">✕</button>`;
+                areaItemsEl.appendChild(div);
+            });
+            // delete handlers
+            areaItemsEl.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const idx = parseInt(e.target.dataset.idx);
+                    map.removeLayer(areas[idx].polygon);
+                    areas.splice(idx, 1);
+                    updateAreaListUI();
+                });
+            });
+        }
+
+        function clearDrawing() {
+            currentMarkers.forEach(m => map.removeLayer(m));
+            currentMarkers = [];
+            currentLatLngs = [];
+            if (previewLine) { map.removeLayer(previewLine); previewLine = null; }
+        }
+
+        function setDrawingMode(on) {
+            drawing = on;
+            btnFinish.style.display = on ? 'block' : 'none';
+            btnCancel.style.display = on ? 'block' : 'none';
+            altBox.style.display    = on ? 'block' : 'none';
+            btnCreate.textContent   = on ? '⏳ Drawing...' : '➕ Create Area';
+            btnCreate.classList.toggle('active', on);
+            btnCreate.disabled = on;
+            map.getContainer().style.cursor = on ? 'crosshair' : '';
+        }
+
+        function computeCentroid(points) {
+            let lat = 0, lng = 0;
+            points.forEach(p => { lat += p[0]; lng += p[1]; });
+            return [lat / points.length, lng / points.length];
+        }
+
+        // Geodesic polygon area using the spherical excess method
+        function computeAreaSqm(points) {
+            const R = 6371000; // Earth radius in meters
+            const toRad = d => d * Math.PI / 180;
+            const n = points.length;
+            if (n < 3) return 0;
+            let total = 0;
+            for (let i = 0; i < n; i++) {
+                const j = (i + 1) % n;
+                const lat1 = toRad(points[i][0]);
+                const lng1 = toRad(points[i][1]);
+                const lat2 = toRad(points[j][0]);
+                const lng2 = toRad(points[j][1]);
+                total += (lng2 - lng1) * (2 + Math.sin(lat1) + Math.sin(lat2));
+            }
+            return Math.abs(total * R * R / 2);
+        }
+
+        function formatArea(sqm) {
+            if (sqm >= 1e6) return (sqm / 1e6).toFixed(2) + ' km²';
+            return sqm.toFixed(1) + ' m²';
+        }
+
+        function areaLabel(name, points) {
+            return name + '\n' + formatArea(computeAreaSqm(points));
+        }
+
+        function updatePreviewLine() {
+            const latlngs = currentLatLngs.map(p => [p[0], p[1]]);
+            if (previewLine) map.removeLayer(previewLine);
+            if (latlngs.length >= 2) {
+                previewLine = L.polyline(latlngs, {
+                    color: '#2196F3', weight: 2, dashArray: '6 4'
+                }).addTo(map);
+            }
+        }
+
+        // ── Polygon colors ─────────────────────────────────────
+        const COLORS = ['#2196F3','#4CAF50','#FF9800','#9C27B0','#f44336',
+                         '#00BCD4','#795548','#E91E63','#3F51B5','#CDDC39'];
+        function areaColor(idx) { return COLORS[idx % COLORS.length]; }
+
+        // ── Create Area ────────────────────────────────────────
+        btnCreate.addEventListener('click', () => {
+            if (drawing) return;
+            setDrawingMode(true);
+            showStatus('Click on the map to add points. Press Finish when done.');
+        });
+
+        // ── Map click → add point ──────────────────────────────
+        map.on('click', (e) => {
+            if (!drawing) return;
+            const { lat, lng } = e.latlng;
+            currentLatLngs.push([lat, lng]);
+
+            const marker = L.circleMarker([lat, lng], {
+                radius: 7, color: '#fff', weight: 2,
+                fillColor: '#2196F3', fillOpacity: 0.9
+            }).addTo(map);
+            marker.bindTooltip(`#${currentLatLngs.length}`, {
+                permanent: true, direction: 'top', offset: [0, -10],
+                className: 'point-label'
+            });
+            currentMarkers.push(marker);
+            updatePreviewLine();
+            showStatus(`Point #${currentLatLngs.length} added (${lat.toFixed(6)}, ${lng.toFixed(6)})`);
+        });
+
+        // ── Finish ─────────────────────────────────────────────
+        btnFinish.addEventListener('click', () => {
+            if (currentLatLngs.length < 3) {
+                showStatus('Need at least 3 points to create an area!');
+                return;
+            }
+            const alt = parseFloat(altInput.value) || 25.0;
+            const points = currentLatLngs.map(p => [p[0], p[1], alt]);
+            const color = areaColor(areas.length);
+
+            const polygon = L.polygon(points.map(p => [p[0], p[1]]), {
+                color: color, weight: 2, fillColor: color, fillOpacity: 0.25
+            }).addTo(map);
+
+            areaCounter++;
+            const area = {
+                name: 'area' + areaCounter,
+                points: points,
+                polygon: polygon,
+                id: areaCounter
+            };
+            areas.push(area);
+
+            // label with area size
+            polygon.bindTooltip(areaLabel(area.name, points), {
+                permanent: true, direction: 'center',
+                className: 'area-label'
+            });
+
+            clearDrawing();
+            setDrawingMode(false);
+            updateAreaListUI();
+            showStatus(`Area "${area.name}" created with ${points.length} points.`);
+        });
+
+        // ── Cancel ─────────────────────────────────────────────
+        btnCancel.addEventListener('click', () => {
+            clearDrawing();
+            setDrawingMode(false);
+            showStatus('Area creation cancelled.');
+        });
+
+        // ── Export ──────────────────────────────────────────────
+        btnExport.addEventListener('click', () => {
+            if (areas.length === 0) {
+                showStatus('No areas to export!');
+                return;
+            }
+
+            const output = areas.map((a, i) => {
+                const rawPts = a.points; // [[lat, lng, alt], ...]
+                const centroid = computeCentroid(rawPts);
+                const alt = rawPts[0][2];
+                const centerPoint = [
+                    parseFloat(centroid[0].toFixed(14)),
+                    parseFloat(centroid[1].toFixed(15)),
+                    alt
+                ];
+                const exportPts = [centerPoint, ...rawPts.map(p => [
+                    parseFloat(p[0].toFixed(14)),
+                    parseFloat(p[1].toFixed(15)),
+                    p[2]
+                ])];
+                return {
+                    name: 'area' + (i + 1),
+                    points: exportPts
+                };
+            });
+
+            const json = JSON.stringify(output, null, 4);
+            jsonOutput.value = json;
+            exportModal.classList.add('show');
+        });
+
+        // ── Load Areas JSON ─────────────────────────────────────
+        const btnLoad  = document.getElementById('btnLoadAreas');
+        const fileInput = document.getElementById('fileInput');
+
+        btnLoad.addEventListener('click', () => {
+            if (drawing) return;
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                try {
+                    const data = JSON.parse(ev.target.result);
+                    if (!Array.isArray(data)) throw new Error('JSON must be an array');
+                    let loaded = 0;
+                    data.forEach(entry => {
+                        if (!entry.points || entry.points.length < 3) return;
+                        // First point is centroid → skip it; remaining are the actual vertices
+                        // Detect: if points.length >= 4 the first is centroid
+                        // But also handle files without centroid (all boundary points)
+                        let pts = entry.points;
+                        // Heuristic: if >=4 points, first is centroid (as per export format)
+                        if (pts.length >= 4) {
+                            pts = pts.slice(1);
+                        }
+                        const alt = (pts[0] && pts[0].length >= 3) ? pts[0][2] : 25.0;
+                        const points = pts.map(p => [
+                            p[0], p[1], (p.length >= 3 ? p[2] : alt)
+                        ]);
+                        const color = areaColor(areas.length);
+                        const polygon = L.polygon(points.map(p => [p[0], p[1]]), {
+                            color: color, weight: 2, fillColor: color, fillOpacity: 0.25
+                        }).addTo(map);
+
+                        areaCounter++;
+                        const area = {
+                            name: entry.name || ('area' + areaCounter),
+                            points: points,
+                            polygon: polygon,
+                            id: areaCounter
+                        };
+                        areas.push(area);
+                        polygon.bindTooltip(areaLabel(area.name, points), {
+                            permanent: true, direction: 'center',
+                            className: 'area-label'
+                        });
+                        loaded++;
+                    });
+                    updateAreaListUI();
+                    // Fit map to show all loaded areas
+                    if (areas.length > 0) {
+                        const allBounds = L.featureGroup(areas.map(a => a.polygon));
+                        map.fitBounds(allBounds.getBounds().pad(0.1));
+                    }
+                    showStatus(`Loaded ${loaded} area(s) from ${file.name}`);
+                } catch (err) {
+                    showStatus('Error loading JSON: ' + err.message, 4000);
+                }
+            };
+            reader.readAsText(file);
+            fileInput.value = ''; // reset so same file can be re-loaded
+        });
+
+        // ── Modal buttons ──────────────────────────────────────
+        document.getElementById('btnCopyJson').addEventListener('click', () => {
+            jsonOutput.select();
+            navigator.clipboard.writeText(jsonOutput.value);
+            showStatus('JSON copied to clipboard!');
+        });
+
+        document.getElementById('btnDownloadJson').addEventListener('click', () => {
+            const blob = new Blob([jsonOutput.value], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'areas.json';
+            link.click();
+            URL.revokeObjectURL(url);
+            showStatus('JSON file downloaded!');
+        });
+
+        document.getElementById('btnCloseModal').addEventListener('click', () => {
+            exportModal.classList.remove('show');
+        });
+
+        // close modal on backdrop click
+        exportModal.addEventListener('click', (e) => {
+            if (e.target === exportModal) exportModal.classList.remove('show');
+        });
+    </script>
+</body>
+</html>

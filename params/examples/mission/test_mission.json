@@ -1,0 +1,111 @@
+{
+    "header": {
+        "stamp": {
+            "sec": 1738333629,
+            "nanosec": 533620559
+        },
+        "frame_id": "0"
+    },
+    "team_id": "drone_team",
+    "platform_class": {
+        "value": 0
+    },
+    "search_areas": [
+    {
+        "type": 1,
+        "description": "drone_search_area_1",
+        "points": [
+            {
+                "latitude": 48.075448620490825, 
+                "longitude": 11.63843100438668, 
+                "altitude": 0.0
+            },
+            {
+                "latitude": 48.075232103189116, 
+                "longitude": 11.637312006912072,
+                "altitude": 0.0
+            },
+            {
+                "latitude": 48.074612994002244,
+                "longitude": 11.637706947197229,
+                "altitude": 0.0
+            },
+            {
+                "latitude": 48.07483966325749, 
+                "longitude": 11.638760121290977,
+                "altitude": 0.0
+            }
+        ]
+    },
+    {
+        "type": 1,
+        "description": "drone_search_area_2",
+        "points": [
+            {
+                "latitude": 48.07673079022151, 
+                "longitude": 11.63866391789119,
+                "altitude": 0.0
+            },
+            {
+                "latitude": 48.076507512303564, 
+                "longitude":  11.637134790120458,
+                "altitude": 0.0
+            },
+            {
+                "latitude": 48.07588165236903,
+                "longitude": 11.63742340032884,
+                "altitude": 0.0
+            },
+            {
+                "latitude": 48.07614552937779, 
+                "longitude": 11.638886704718713,
+                "altitude": 0.0
+            }
+        ]
+    }
+    ],
+    "no_fly_zones": [
+        {
+            "type": 0,
+            "description": "no fly zone 2",
+            "points": [
+                {
+                    "latitude": 48.075591654536304, 
+                    "longitude": 11.639567827465772,
+                    "altitude": 0.0
+                },
+                {
+                    "latitude": 48.075491068979,
+                    "longitude": 11.639051678923488,
+                    "altitude": 0.0
+                },
+                {
+                    "latitude": 48.0750567925696, 
+                    "longitude": 11.639285857428785,
+                    "altitude": 0.0
+                },
+                {
+                    "latitude": 48.075155782367816,
+                    "longitude":  11.639787668511559,
+                    "altitude": 0.0
+                }
+            ]
+        }
+    ],
+    "max_height": 150,
+    "min_height": 5,
+    "desired_ground_dist": 25,
+    "starting_point": {
+        "latitude": 48.07569676896987, 
+        "longitude": 11.63853516192711,
+        "altitude": 0.0
+    },
+    "target_objects":["person"],
+    "mission_goal": "",
+    "pois": [],
+    "prio_areas": [],
+    "sensor_mode": {
+        "value": 0
+    },
+    "danger_zones": []
+}

@@ -1,0 +1,133 @@
+general:
+  platform_id: milanX
+  team_id: drone_team
+  model: Multikopter U20 Multicopter
+  flight_controller: ARDUPILOT # options: PX4_SIMULATED, PX4, ARDUPILOT, ANAFI (not implemented yet)
+  flight_controller_address: serial:///dev/ttyTHS1:57600 # {protocol}://{ip_address}:{port/baudrate}
+  offboard_controller: JETSON_ORIN_NX # options: PI, JETSON_ORIN_NX, JETSON_XAVIER_NX, DESKTOP
+
+network: # unused in simulation
+  - id: vpn
+    ip: 10.8.0.5X
+
+flight_parameters:
+  # General flight parameters
+  general:
+    max_flight_duration_s: 1200.0 # just used for planning
+    max_flight_height_m: 120.0
+  
+  # Acceptable tolerances for counting checkpoints as completed (logical AND).
+  checkpoint_tolerances:
+    position_horizontal_m: 2.0
+    position_vertical_m: 2.0
+    velocity_total_m_s: 0.2
+    yaw_deg: 1.0
+  
+  # Limits for the flight controller.
+  # These should ideally be set to the maximum safe values for the specific platform.
+  flight_controller_limits:
+    velocity_horizontal_m_s: 5.0
+    velocity_vertical_m_s: 2.0
+    acceleration_horizontal_m_s2: 1.0
+    acceleration_vertical_m_s2: 0.5
+    rate_yaw_deg_s: 60.0
+    acceleration_yaw_deg_s2: 60.0
+
+peripheral_devices: # sensors and actuators
+  - id: cam_eo # unique identifier for the sensor
+    package_id: cam_0 # for sensor packages like ZT30
+    type: eo_camera # type used for planning - options: eo_camera, ir_camera, first_aid, gimbal (not implemented yet)
+    model: ZT30 # hardware (implementation) - options: RPI5, ZT30, SIM_UE, SIM_IS, DROP_SERVO, DROP_SERVO_SIM_UE, DROP_SERVO_SIM_IS (not implemented yet)
+    
+    # Internal publishing (required)
+    shared_memory_publishing_settings:
+      width: 4096
+      height: 2160
+      fps: 30
+    
+    # RTSP data streaming (optional)
+    rtsp_publishing_settings:
+      width: 640
+      height: 480
+      fps: 5
+      bitrate_kbps: 2000
+    
+    # Camera extrinsics relative to the vehicle's body frame
+    extrinsics:
+      position:
+        x_m: 0.15
+        y_m: 0.0
+        z_m: 0.1
+      orientation:
+        roll_deg: 0.0
+        pitch_deg: 0.0
+        yaw_deg: 0.0
+      fov:
+        horizontal_deg: 20.0
+        vertical_deg: 20.0
+  
+  - id: cam_ir
+    package_id: cam_0
+    type: ir_camera
+    model: ZT30
+    
+    # Internal publishing (required)
+    shared_memory_publishing_settings:
+      width: 640
+      height: 512
+      fps: 30
+    
+    # RTSP data streaming (optional)
+    rtsp_publishing_settings:
+      width: 640
+      height: 512
+      fps: 5
+      bitrate_kbps: 2000
+    
+    extrinsics:
+      position:
+        x_m: 0.15
+        y_m: 0.0
+        z_m: 0.1
+      orientation:
+        roll_deg: 0.0
+        pitch_deg: 0.0
+        yaw_deg: 0.0
+      fov:
+        horizontal_deg: 20.0
+        vertical_deg: 20.0
+  
+  - id: lrf
+    package_id: cam_0
+    type: lrf
+    model: ZT30
+    
+    ros_publishing_settings:
+      frequency: 5
+    
+    extrinsics:
+      position:
+        x_m: 0.15
+        y_m: 0.0
+        z_m: 0.1
+      orientation:
+        roll_deg: 0.0
+        pitch_deg: 0.0
+        yaw_deg: 0.0
+    
+    limits:
+      min_distance_m: 5.0
+      max_distance_m: 1200.0
+  
+  - id: gimbal
+    package_id: cam_0
+    type: gimbal
+    model: ZT30
+    
+    gimbal_limits:
+      min_pitch_deg: -90.0
+      max_pitch_deg: 25.0
+      min_yaw_deg: -180.0
+      max_yaw_deg: 180.0
+      min_roll_deg: -45.0
+      max_roll_deg: 45.0

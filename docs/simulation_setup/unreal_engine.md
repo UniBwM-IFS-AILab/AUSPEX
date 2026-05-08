@@ -1,0 +1,2 @@
+### A guide on how to set up the simulation environment [REAP](https://github.com/UniBwM-IFS-AILab/REAP)
+This guide is made for the installation and setup of AUSPEX and does not include setting up the Unreal Engine visualization with the Colosseum Plugin (the successor of the AirSim Plugin). See the REAP environments documentation at https://github.com/UniBwM-IFS-AILab/REAP for the visualization.

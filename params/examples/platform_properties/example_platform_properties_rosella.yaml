@@ -1,0 +1,34 @@
+general:
+  platform_id: rosellaX
+  team_id: drone_team
+  model: Racing Drone
+  flight_controller: PX4 # options: PX4_SIMULATED, PX4, ARDUPILOT, ANAFI (not implemented yet)
+  flight_controller_address: serial:///dev/ttyTHS1:921600 # {protocol}://{ip_address}:{port/baudrate}
+  offboard_controller: JETSON_ORIN_NX # options: PI, JETSON_ORIN_NX, JETSON_XAVIER_NX, DESKTOP
+
+network: # unused in simulation
+  - id: vpn
+    ip: 10.8.0.6X
+
+flight_parameters:
+  # General flight parameters
+  general:
+    max_flight_duration_s: 1200.0 # just used for planning
+    max_flight_height_m: 120.0
+  
+  # Acceptable tolerances for counting checkpoints as completed (logical AND).
+  checkpoint_tolerances:
+    position_horizontal_m: 2.0
+    position_vertical_m: 2.0
+    velocity_total_m_s: 0.2
+    yaw_deg: 1.0
+  
+  # Limits for the flight controller.
+  # These should ideally be set to the maximum safe values for the specific platform.
+  flight_controller_limits:
+    velocity_horizontal_m_s: 5.0
+    velocity_vertical_m_s: 2.0
+    acceleration_horizontal_m_s2: 1.0
+    acceleration_vertical_m_s2: 0.5
+    rate_yaw_deg_s: 60.0
+    acceleration_yaw_deg_s2: 60.0

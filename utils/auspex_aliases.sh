@@ -2,75 +2,65 @@
 AUSPEX_HOME="/root/AUSPEX"
 
 # start/stop PX4 autopilot
-alias kill_px4="pkill -x px4 || true"
-alias run_px4="/root/scripts/sitl_multiple_run.sh"
+alias px4_kill="pkill -x px4 || true"
+alias px4_run="/root/scripts/sitl_multiple_run.sh"
 
 alias listen="ros2 run demo_nodes_cpp listener"
 alias talk="ros2 run demo_nodes_cpp talker"
 
-# start copernicus server
-alias run_copernicus="ros2 run auspex_knowledge copernicus_server"
+# start height server
+alias height_server_run="ros2 run auspex_knowledge height_server"
 
 # start/stop valkey
-alias run_valkey="$AUSPEX_HOME/utils/valkey_conf/start_valkey.sh"
-alias stop_valkey="pkill valkey-server"
+alias valkey_run="$AUSPEX_HOME/utils/valkey/valkey_run.sh"
+alias valkey_stop="pkill valkey-server"
 
 # start AUSPEX_KNOW
-alias run_know="sleep 2; ros2 run auspex_knowledge knowledge_main"
+alias know_run="sleep 3; ros2 run auspex_knowledge knowledge_main"
 
 # start AUSPEX_AERO
-alias run_aero="sleep 3; ros2 launch auspex_obc auspex_obc.launch.py"
+alias aero_run="ros2 launch auspex_aero auspex_aero.launch.py"
 
-# start AUSPEX_EXEC
-alias run_exec="ros2 launch auspex_executor start_executor_main.launch.py"
+# start AUSPEX_CTRL
+alias ctrl_run="sleep 3; ros2 launch auspex_executor controller_main.launch.py"
+
+# start AUSPEX_EXEC on a platform
+alias exec_run="sleep 3; ros2 launch auspex_executor decentral_executor_main.launch.py"
 
 # start AUSPEX_PLAN
-alias run_plan="sleep 3; ros2 launch auspex_planning start_planning_main.launch.py"
+alias plan_run="ros2 launch auspex_planning planning_main.launch.py"
 
 # start AUSPEX_SENS
-alias run_sens="echo SENS is not running"
+alias sens_run="ros2 run auspex_perception sens_main"
 
 # start command publisher
-alias run_cmd="ros2 run auspex_planning planning_command_publisher"
+alias cmd_run="ros2 run auspex_planning planning_command_publisher"
+alias cmd_plan="ros2 topic pub --once planner_command auspex_msgs/msg/UserCommand \"{user_command: 7, team_id: 'drone_team'}\""
+alias cmd_accept="ros2 topic pub --once planner_command auspex_msgs/msg/UserCommand \"{user_command: 5, team_id: 'drone_team'}\""
 
 # start rosbridge server
-alias run_bridge="ros2 launch rosbridge_server rosbridge_websocket_launch.xml"
-alias run_bridge_ip="ros2 launch rosbridge_server rosbridge_websocket_launch.xml address:="
+alias bridge_run="ros2 launch rosbridge_server rosbridge_websocket_launch.xml"
+alias bridge_run_ip="ros2 launch rosbridge_server rosbridge_websocket_launch.xml address:="
 
-alias test_takeoff="ros2 action send_goal /vhcl0/takeoff auspex_msgs/action/Takeoff '{takeoff_height: 300}'"
-alias test_land="ros2 action send_goal /vhcl0/land auspex_msgs/action/Land '{land_speed: 1}'"
+alias exec_source="source $AUSPEX_HOME/AUSPEX-EXEC/install/setup.bash"
+alias plan_source="source $AUSPEX_HOME/AUSPEX-PLAN/install/setup.bash"
+alias sens_source="source $AUSPEX_HOME/AUSPEX-SENS/install/setup.bash"
+alias aero_source="source $AUSPEX_HOME/AUSPEX-AERO/install/setup.bash"
+alias msgs_source="source $AUSPEX_HOME/AUSPEX-MSGS/install/setup.bash"
+alias know_source="source $AUSPEX_HOME/AUSPEX-KNOW/install/setup.bash"
 
-alias edit_alias="nano $AUSPEX_HOME/utils/auspex_aliases.sh"
-alias reload_alias="source $AUSPEX_HOME/utils/auspex_aliases.sh"
+alias exec_build="cd $AUSPEX_HOME/AUSPEX-EXEC && colcon build"
+alias plan_build="cd $AUSPEX_HOME/AUSPEX-PLAN && colcon build"
+alias sens_build="cd $AUSPEX_HOME/AUSPEX-SENS && colcon build"
+alias msgs_build="cd $AUSPEX_HOME/AUSPEX-MSGS && colcon build"
+alias aero_build="cd $AUSPEX_HOME/AUSPEX-AERO && colcon build"
+alias know_build="cd $AUSPEX_HOME/AUSPEX-KNOW && colcon build"
 
-alias edit_exports="nano $AUSPEX_HOME/utils/auspex_exports.sh"
-alias reload_exports="source $AUSPEX_HOME/utils/auspex_exports.sh"
+alias auspex_rebuild="$AUSPEX_HOME/utils/dev_scripts/auspex_rebuild.sh"
+alias auspex_build="$AUSPEX_HOME/utils/dev_scripts/auspex_build.sh"
+alias auspex_clean="$AUSPEX_HOME/utils/dev_scripts/auspex_clean.sh"
 
-alias edusrexp="nano $AUSPEX_HOME/utils/user_exports.sh"
-
-alias source_auspex_exec="source $AUSPEX_HOME/AUSPEX-EXEC/install/setup.bash"
-alias source_auspex_plan="source $AUSPEX_HOME/AUSPEX-PLAN/install/setup.bash"
-alias source_auspex_sens="source $AUSPEX_HOME/AUSPEX-SENS/install/setup.bash"
-alias source_auspex_aero="source $AUSPEX_HOME/AUSPEX-AERO/install/setup.bash"
-alias source_auspex_msgs="source $AUSPEX_HOME/AUSPEX-MSGS/install/setup.bash"
-alias source_auspex_know="source $AUSPEX_HOME/AUSPEX-KNOW/install/setup.bash"
-
-alias source_all="source_auspex_exec && source_auspex_plan && source_auspex_sens && source_auspex_msgs && source_auspex_aero && source_auspex_know"
-
-alias build_exec="cd $AUSPEX_HOME/AUSPEX-EXEC && colcon build"
-alias build_plan="cd $AUSPEX_HOME/AUSPEX-PLAN && colcon build"
-alias build_sens="cd $AUSPEX_HOME/AUSPEX-SENS && colcon build"
-alias build_msgs="cd $AUSPEX_HOME/AUSPEX-MSGS && colcon build"
-alias build_aero="cd $AUSPEX_HOME/AUSPEX-AERO && colcon build"
-alias build_know="cd $AUSPEX_HOME/AUSPEX-KNOW && colcon build"
-
-alias rebuild_auspex="$AUSPEX_HOME/utils/dev_scripts/rebuild_auspex.sh"
-alias build_auspex="$AUSPEX_HOME/utils/dev_scripts/build_auspex.sh"
-alias clean_auspex="$AUSPEX_HOME/utils/dev_scripts/clean_auspex.sh"
-
-alias buinvasa="invasa rebuild_auspex"
-
-alias eb='sudo nano ~/.bashrc'
+alias eb='nano ~/.bashrc'
 alias sb='source ~/.bashrc'
 
 alias aero='cd ~/AUSPEX/AUSPEX-AERO/'
@@ -81,3 +71,4 @@ alias exec='cd ~/AUSPEX/AUSPEX-EXEC'
 alias plan='cd ~/AUSPEX/AUSPEX-PLAN'
 alias know='cd ~/AUSPEX/AUSPEX-KNOW'
 alias auspex='cd ~/AUSPEX'
+alias params="cd ~/AUSPEX/params"

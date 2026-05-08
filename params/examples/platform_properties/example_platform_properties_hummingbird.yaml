@@ -1,0 +1,79 @@
+general:
+  platform_id: hummingbirdX
+  team_id: drone_team
+  model: Holybro X500 Multicopter
+  flight_controller: PX4 # options: PX4_SIMULATED, PX4, ARDUPILOT, ANAFI (not implemented yet)
+  flight_controller_address: serial:///dev/ttyAMA0:921600 # {protocol}://{ip_address}:{port/baudrate}
+  offboard_controller: PI # options: PI, JETSON_ORIN_NX, JETSON_XAVIER_NX, DESKTOP
+
+network: # unused in simulation
+  - id: vpn
+    ip: 10.8.0.1X
+
+flight_parameters:
+  # General flight parameters
+  general:
+    max_flight_duration_s: 1200.0 # just used for planning
+    max_flight_height_m: 120.0
+  
+  # Acceptable tolerances for counting checkpoints as completed (logical AND).
+  checkpoint_tolerances:
+    position_horizontal_m: 2.0
+    position_vertical_m: 2.0
+    velocity_total_m_s: 0.2
+    yaw_deg: 1.0
+  
+  # Limits for the flight controller.
+  # These should ideally be set to the maximum safe values for the specific platform.
+  flight_controller_limits:
+    velocity_horizontal_m_s: 5.0
+    velocity_vertical_m_s: 2.0
+    acceleration_horizontal_m_s2: 1.0
+    acceleration_vertical_m_s2: 0.5
+    rate_yaw_deg_s: 60.0
+    acceleration_yaw_deg_s2: 60.0
+
+peripheral_devices: # sensors and actuators
+  - id: cam_0 # unique identifier for the sensor
+    # package_id: cam_0 # for sensor packages like ZT30
+    type: eo_camera # type used for planning - options: eo_camera, ir_camera, first_aid, gimbal (not implemented yet)
+    model: RPI5 # hardware (implementation) - options: RPI5, ZT30, SIM_UE, SIM_IS, DROP_SERVO, DROP_SERVO_SIM_UE, DROP_SERVO_SIM_IS (not implemented yet)
+    
+    # Internal publishing (required)
+    shared_memory_publishing_settings:
+      width: 2028
+      height: 1520
+      fps: 30
+    
+    # RTSP data streaming (optional)
+    rtsp_publishing_settings:
+      width: 640
+      height: 520
+      fps: 5
+      bitrate_kbps: 2000
+    
+    # Camera extrinsics relative to the vehicle's body frame
+    extrinsics:
+      position:
+        x_m: 0.15
+        y_m: 0.0
+        z_m: 0.1
+      orientation:
+        roll_deg: 0.0
+        pitch_deg: -45.0
+        yaw_deg: 0.0
+      fov:
+        horizontal_deg: 20.0
+        vertical_deg: 20.0
+  
+  - id: drop_0
+    type: first_aid
+    model: DROP_SERVO
+    
+    channel: 5
+    content:
+      - Bandage
+      - Gauze
+      - Antiseptic Wipes
+      - Adhesive Tape
+      - Scissors

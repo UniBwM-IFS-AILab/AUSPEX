@@ -1,19 +1,16 @@
 # start complete simulation
 export AUSPEX_HOST_DIR="/home/$USER/AUSPEX"
 
-alias win_start_sim="$AUSPEX_HOST_DIR/utils/startup_scripts/win_start_sim.sh"
-alias win_start_gcs="$AUSPEX_HOST_DIR/utils/startup_scripts/win_start_gcs.sh"
+alias auspex_run_sim_ue="$AUSPEX_HOST_DIR/utils/startup_scripts/auspex_run_sim.sh ue"
+alias auspex_run_sim_is="$AUSPEX_HOST_DIR/utils/startup_scripts/auspex_run_sim.sh is"
+alias auspex_run_gcs="$AUSPEX_HOST_DIR/utils/startup_scripts/auspex_run_sim.sh gcs"
 
-alias lin_start_gcs="$AUSPEX_HOST_DIR/utils/startup_scripts/lin_start_gcs.sh"
-alias lin_start_ue_sim="$AUSPEX_HOST_DIR/utils/startup_scripts/ue_lin_start_sim.sh"
-alias lin_start_is_sim="$AUSPEX_HOST_DIR/utils/startup_scripts/is_lin_start_sim.sh"
+alias auspex_kill="iv 'kill_px4 && pkill -f copernicus_serv && pkill -f valkey-server && pkill -f knowledge_main && pkill -f auspex_obc && pkill -f upf4ros2_main && pkill -f executor_main_n && pkill -f planning_main_n'"
+alias auspex_install="cd $AUSPEX_HOST_DIR/ && ./install.sh TERRA"
+alias auspex_setup="cd $AUSPEX_HOST_DIR/ && ./setup.py"
+alias auspex_pull="$AUSPEX_HOST_DIR/utils/dev_scripts/auspex_pull.sh"
 
-alias kill_sim="iv 'kill_px4 && pkill -f copernicus_serv && pkill -f valkey-server && pkill -f knowledge_main && pkill -f auspex_obc && pkill -f upf4ros2_main && pkill -f executor_main_n && pkill -f planning_main_n'"
-alias install_auspex="cd $AUSPEX_HOST_DIR/ && ./install.sh TERRA"
-alias setup_auspex="cd $AUSPEX_HOST_DIR/ && ./setup.py"
-alias pull_auspex="$AUSPEX_HOST_DIR/utils/dev_scripts/pull_auspex.sh"
-
-alias edit_properties="nano /home/$USER/auspex_params/platform_properties/platform_properties.json"
+alias edit_properties="nano $AUSPEX_HOST_DIR/params/platform_properties/platform_properties.json"
 
 # Directory Aliases
 alias aero="cd $AUSPEX_HOST_DIR/AUSPEX-AERO/"
@@ -23,10 +20,11 @@ alias msgs="cd $AUSPEX_HOST_DIR/AUSPEX-MSGS/"
 alias exec="cd $AUSPEX_HOST_DIR/AUSPEX-EXEC"
 alias plan="cd $AUSPEX_HOST_DIR/AUSPEX-PLAN"
 alias know="cd $AUSPEX_HOST_DIR/AUSPEX-KNOW"
-alias auspex="cd ~/AUSPEX"
-alias params="cd ~/auspex_params"
+alias auspex="cd $AUSPEX_HOST_DIR"
+alias params="cd $AUSPEX_HOST_DIR/params"
 
-alias startvpn="$AUSPEX_HOST_DIR/utils/ovpn/connect-vpn.sh"
-alias stopvpn="sudo pkill -SIGINT openvpn"
+alias auspex_vpn_run="$AUSPEX_HOST_DIR/utils/ovpn/connect-vpn.sh"
+alias auspex_vpn_stop="sudo pkill -SIGINT openvpn"
+alias ssh_connect="$AUSPEX_HOST_DIR/utils/startup_scripts/auspex_ssh_connect.sh"
 
 source "$AUSPEX_HOST_DIR/utils/user_exports.sh"
