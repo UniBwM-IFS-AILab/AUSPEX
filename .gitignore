@@ -3,3 +3,15 @@ utils/user_exports.sh
 utils/ovpn/*.ovpn
 utils/ovpn/*.log
 utils/ovpn/auth.txt
+utils/ovpn/ip_lookup.txt
+know.json
+utils/wifi/*.csv
+params/config
+params/geographic
+params/mission
+params/platform_properties
+params/dev_space
+.devcontainer
+.vscode
+.codex
+*.tif
